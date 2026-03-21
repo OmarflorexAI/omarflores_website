@@ -1,0 +1,6 @@
+node_modules/
+screenshots/
+brand_assets/
+package-lock.json
+*.png
+*.jpg

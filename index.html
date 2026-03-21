@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth antialiased">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omar Flores — AI Automation Expert</title>
+  <meta name="description" content="Omar Flores builds AI automation systems, lead generation machines, and intelligent workflows that drive real results.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            dark:       '#050505',
+            accent:     '#D4AF37',
+            surface:    '#0f0f0f',
+            'surface-h':'#161616',
+            secondary:  '#B0B7C3',
+          },
+          fontFamily: {
+            serif: ['Instrument Serif', 'Georgia', 'serif'],
+            sans:  ['DM Sans', 'sans-serif'],
+            mono:  ['JetBrains Mono', 'monospace'],
+          },
+          borderColor: {
+            DEFAULT: 'rgba(255,255,255,0.07)',
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ─── Brand color spectrum (rainbow border) ─────────────── */
+    :root {
+      --color-1: 46 78% 56%;   /* bright gold  */
+      --color-2: 38 90% 52%;   /* warm amber   */
+      --color-3: 50 60% 70%;   /* champagne     */
+      --color-4: 43 72% 42%;   /* deep gold    */
+      --color-5: 33 85% 55%;   /* orange-gold  */
+    }
+
+    /* ─── Base ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { background: #050505; color: #fff; scroll-behavior: smooth; }
+    a, a:visited, a:active { color: inherit; text-decoration: none; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 20px;
+      background: #050505;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* ─── Text selection ────────────────────────────────────── */
+    ::selection      { background: #D4AF37; color: #050505; }
+    ::-moz-selection { background: #D4AF37; color: #050505; }
+
+    /* ─── Custom border color ──────────────────────────────── */
+    .border-dim   { border-color: rgba(255,255,255,0.07); }
+    .bg-border-dim{ background-color: rgba(255,255,255,0.07); }
+
+    /* ─── BGPattern (ported from shadcn component) ─────────── */
+    /* Outer shell: mask + clip. Sits behind content. */
+    .bg-pattern {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden; /* clips the oversized animated inner div */
+    }
+
+    /* Inner animated layer — oversized by one grid cell on all sides
+       so translate(44px,44px) never reveals a gap */
+    .bg-pattern-inner {
+      position: absolute;
+      top: -44px; left: -44px; right: -44px; bottom: -44px;
+    }
+
+    /* Variant: grid (H + V lines, like romanalabs.com) */
+    .bg-pattern-grid {
+      background-image:
+        linear-gradient(to right,  rgba(255,255,255,0.022) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.022) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    /* Variant: vertical-lines only */
+    .bg-pattern-vlines {
+      background-image: linear-gradient(to right, rgba(255,255,255,0.043) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    /* Variant: dots */
+    .bg-pattern-dots {
+      background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Mask: fade-edges — center visible, tight radial fade to edges */
+    .bg-mask-fade-edges {
+      -webkit-mask-image: radial-gradient(ellipse 65% 65% at 50% 50%, black 20%, transparent 75%);
+      mask-image:         radial-gradient(ellipse 65% 65% at 50% 50%, black 20%, transparent 75%);
+    }
+
+    /* Mask: fade-y — top & bottom fade out */
+    .bg-mask-fade-y {
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+      mask-image:         linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+    }
+
+    /* Mask: fade-bottom */
+    .bg-mask-fade-bottom {
+      -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+      mask-image:         linear-gradient(to bottom, black 40%, transparent 100%);
+    }
+
+    /* Parent containers that host a .bg-pattern child */
+    .grid-bg {
+      position: relative;
+      isolation: isolate;
+    }
+
+    /* Grid drift — translate by exactly one cell for a seamless loop.
+       GPU-composited transform is reliable across all browsers. */
+    @keyframes gridDrift {
+      0%   { transform: translate(0,    0); }
+      100% { transform: translate(44px, 44px); }
+    }
+    .bg-pattern-animate { animation: gridDrift 5s linear infinite; }
+
+    /* Dots background slow drift */
+    @keyframes dotsDrift {
+      0%   { background-position: 0 0; }
+      100% { background-position: 24px 24px; }
+    }
+    .bg-dots-drift { animation: dotsDrift 14s linear infinite; }
+
+    /* ─── Scroll progress bar ───────────────────────────────── */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: #D4AF37;
+      z-index: 9999;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 8px rgba(212,175,55,0.5);
+    }
+
+    /* ─── Glass button — dark background ────────────────────── */
+    .btn-glass {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 4px 20px rgba(0,0,0,0.18);
+      position: relative;
+      overflow: hidden;
+      z-index: 0;
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    /* top inner highlight line */
+    .btn-glass::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 5%; right: 5%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+      z-index: 1;
+    }
+    /* slide-up fill on hover */
+    .btn-glass::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.07);
+      transform: translateY(101%);
+      transition: transform 0.42s cubic-bezier(.16,1,.3,1);
+      z-index: 0;
+    }
+    .btn-glass:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(255,255,255,0.24);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 4px 28px rgba(0,0,0,0.22);
+    }
+    .btn-glass:hover::after  { transform: translateY(0); }
+    .btn-glass .btn-glass-content { position: relative; z-index: 2; }
+
+    /* ─── Glass Button (Knoll / Codepen) ───────────────── */
+    @property --angle-1 {
+      syntax: "<angle>";
+      inherits: false;
+      initial-value: -75deg;
+    }
+    @property --angle-2 {
+      syntax: "<angle>";
+      inherits: false;
+      initial-value: -45deg;
+    }
+
+    .button-wrap {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      border-radius: 999vw;
+      background: transparent;
+      pointer-events: none;
+      transition: all 400ms cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .button-shadow {
+      --shadow-cuttoff-fix: 2em;
+      position: absolute;
+      width: calc(100% + var(--shadow-cuttoff-fix));
+      height: calc(100% + var(--shadow-cuttoff-fix));
+      top: calc(0% - var(--shadow-cuttoff-fix) / 2);
+      left: calc(0% - var(--shadow-cuttoff-fix) / 2);
+      filter: blur(clamp(2px, 0.125em, 12px));
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .button-shadow::after {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      border-radius: 999vw;
+      background: linear-gradient(180deg, rgba(0,0,0,0.14), rgba(0,0,0,0.06));
+      width: calc(100% - var(--shadow-cuttoff-fix) - 0.25em);
+      height: calc(100% - var(--shadow-cuttoff-fix) - 0.25em);
+      top: calc(var(--shadow-cuttoff-fix) - 0.5em);
+      left: calc(var(--shadow-cuttoff-fix) - 0.875em);
+      padding: 0.125em;
+      box-sizing: border-box;
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude;
+      transition: all 400ms cubic-bezier(0.25, 1, 0.5, 1);
+      overflow: visible;
+      opacity: 1;
+    }
+
+    /* ── Light-bg default (contact section / white background) ── */
+    .button-wrap button {
+      --border-width: clamp(1px, 0.0625em, 4px);
+      all: unset;
+      cursor: pointer;
+      position: relative;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      pointer-events: auto;
+      z-index: 3;
+      font-size: clamp(0.75rem, 1.5vw, 1rem);
+      background: linear-gradient(
+        160deg,
+        rgba(255,255,255,0.82) 0%,
+        rgba(240,242,248,0.60) 50%,
+        rgba(255,255,255,0.82) 100%
+      );
+      border-radius: 999vw;
+      border: 1px solid rgba(0,0,0,0.09);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,1),
+        inset 0 -1px 0 rgba(0,0,0,0.05),
+        0 1px 2px rgba(0,0,0,0.06),
+        0 4px 12px rgba(0,0,0,0.08),
+        0 12px 32px rgba(0,0,0,0.06);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: all 400ms cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .button-wrap button:hover {
+      transform: scale(0.975);
+      background: linear-gradient(
+        160deg,
+        rgba(255,255,255,0.92) 0%,
+        rgba(240,242,250,0.72) 50%,
+        rgba(255,255,255,0.92) 100%
+      );
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,1),
+        inset 0 -1px 0 rgba(0,0,0,0.07),
+        0 1px 2px rgba(0,0,0,0.08),
+        0 6px 18px rgba(0,0,0,0.11),
+        0 16px 40px rgba(0,0,0,0.08);
+    }
+
+    /* ── Dark-bg variant (hero / raindrop on black) ── */
+    .button-wrap.dark button {
+      background: linear-gradient(
+        170deg,
+        rgba(255,255,255,0.14) 0%,
+        rgba(255,255,255,0.03) 35%,
+        rgba(255,255,255,0.03) 65%,
+        rgba(255,255,255,0.10) 100%
+      );
+      /* Direct border anchors the shape clearly on pure black */
+      border: 1px solid rgba(255,255,255,0.22);
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,0.80),
+        inset 0 1px 8px rgba(255,255,255,0.10),
+        inset 0 -1px 0 rgba(255,255,255,0.06),
+        0 0 16px 2px rgba(255,255,255,0.04),
+        0 2px 12px rgba(0,0,0,0.5),
+        0 8px 32px rgba(0,0,0,0.35);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .button-wrap.dark button:hover {
+      border-color: rgba(255,255,255,0.35);
+      background: linear-gradient(
+        170deg,
+        rgba(255,255,255,0.20) 0%,
+        rgba(255,255,255,0.05) 35%,
+        rgba(255,255,255,0.05) 65%,
+        rgba(255,255,255,0.15) 100%
+      );
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,0.90),
+        inset 0 1px 10px rgba(255,255,255,0.14),
+        inset 0 -1px 0 rgba(255,255,255,0.08),
+        0 0 24px 4px rgba(255,255,255,0.06),
+        0 4px 20px rgba(0,0,0,0.6),
+        0 12px 40px rgba(0,0,0,0.4);
+    }
+    .button-wrap.dark button span {
+      color: rgba(255,255,255,0.88);
+      text-shadow: 0 1px 10px rgba(0,0,0,0.7);
+    }
+    /* Animated conic border on top of the static border — white specular only */
+    .button-wrap.dark button::after {
+      background: conic-gradient(
+          from var(--angle-1) at 50% 50%,
+          rgba(255,255,255,0.75),
+          rgba(255,255,255,0.03) 6% 42%,
+          rgba(255,255,255,0.75) 50%,
+          rgba(255,255,255,0.03) 58% 94%,
+          rgba(255,255,255,0.75)
+        ),
+        linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0.22));
+      box-shadow: inset 0 0 0 calc(var(--border-width) / 2) rgba(255,255,255,0.40);
+    }
+
+    .button-wrap button span {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5em;
+      user-select: none;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.1em;
+      font-weight: 500;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: rgba(30, 30, 30, 1);
+      -webkit-font-smoothing: antialiased;
+      text-shadow: 0em 0.25em 0.05em rgba(0,0,0,0.08);
+      transition: all 400ms cubic-bezier(0.25, 1, 0.5, 1);
+      padding-inline: 1.75em;
+      padding-block: 1em;
+    }
+
+    .button-wrap button:hover span {
+      text-shadow: 0.025em 0.025em 0.025em rgba(0,0,0,0.1);
+    }
+
+    .button-wrap button span::after {
+      content: "";
+      display: block;
+      position: absolute;
+      z-index: 3;
+      width: calc(100% - var(--border-width));
+      height: calc(100% - var(--border-width));
+      top: calc(0% + var(--border-width) / 2);
+      left: calc(0% + var(--border-width) / 2);
+      box-sizing: border-box;
+      border-radius: 999vw;
+      overflow: clip;
+      background: linear-gradient(
+        var(--angle-2),
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.5) 40% 50%,
+        rgba(255,255,255,0) 55%
+      );
+      mix-blend-mode: screen;
+      pointer-events: none;
+      background-size: 200% 200%;
+      background-position: 0% 50%;
+      background-repeat: no-repeat;
+      transition:
+        background-position 500ms cubic-bezier(0.25, 1, 0.5, 1),
+        --angle-2 500ms cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .button-wrap button:hover span::after {
+      background-position: 25% 50%;
+    }
+
+    .button-wrap button:active span::after {
+      background-position: 50% 15%;
+      --angle-2: -15deg;
+    }
+
+    .button-wrap button::after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      border-radius: 999vw;
+      width: calc(100% + var(--border-width));
+      height: calc(100% + var(--border-width));
+      top: calc(0% - var(--border-width) / 2);
+      left: calc(0% - var(--border-width) / 2);
+      padding: var(--border-width);
+      box-sizing: border-box;
+      background: conic-gradient(
+          from var(--angle-1) at 50% 50%,
+          rgba(0,0,0,0.5),
+          rgba(0,0,0,0) 5% 40%,
+          rgba(0,0,0,0.5) 50%,
+          rgba(0,0,0,0) 60% 95%,
+          rgba(0,0,0,0.5)
+        ),
+        linear-gradient(180deg, rgba(255,255,255,0.5), rgba(255,255,255,0.5));
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude;
+      transition: all 400ms cubic-bezier(0.25, 1, 0.5, 1), --angle-1 500ms ease;
+      box-shadow: inset 0 0 0 calc(var(--border-width) / 2) rgba(255,255,255,0.5);
+    }
+
+    .button-wrap button:hover::after { --angle-1: -125deg; }
+    .button-wrap button:active::after { --angle-1: -75deg; }
+
+    .button-wrap:has(button:hover) .button-shadow {
+      filter: blur(clamp(2px, 0.0625em, 6px));
+      transition: filter 400ms cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .button-wrap:has(button:hover) .button-shadow::after {
+      top: calc(var(--shadow-cuttoff-fix) - 0.875em);
+    }
+
+    .button-wrap:has(button:active) {
+      transform: rotate3d(1, 0, 0, 25deg);
+    }
+
+    .button-wrap:has(button:active) button {
+      box-shadow:
+        inset 0 0.125em 0.125em rgba(0,0,0,0.05),
+        inset 0 -0.125em 0.125em rgba(255,255,255,0.5),
+        0 0.125em 0.125em -0.125em rgba(0,0,0,0.2),
+        0 0 0.1em 0.25em inset rgba(255,255,255,0.2),
+        0 0.225em 0.05em 0 rgba(0,0,0,0.05),
+        0 0.25em 0 0 rgba(255,255,255,0.75),
+        inset 0 0.25em 0.05em 0 rgba(0,0,0,0.15);
+    }
+
+    .button-wrap:has(button:active) .button-shadow {
+      filter: blur(clamp(2px, 0.125em, 12px));
+    }
+
+    .button-wrap:has(button:active) .button-shadow::after {
+      top: calc(var(--shadow-cuttoff-fix) - 0.5em);
+      opacity: 0.75;
+    }
+
+    .button-wrap:has(button:active) span {
+      text-shadow: 0.025em 0.25em 0.05em rgba(0,0,0,0.12);
+    }
+
+    /* ─── Rainbow Border Button ─────────────────────────────── */
+    @keyframes rainbow-slide {
+      0%   { background-position: 0%; }
+      100% { background-position: 200%; }
+    }
+    .rainbow-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 6px;
+      background-image:
+        linear-gradient(#ffffff, #ffffff),
+        linear-gradient(90deg,
+          hsl(var(--color-1)),
+          hsl(var(--color-5)),
+          hsl(var(--color-3)),
+          hsl(var(--color-4)),
+          hsl(var(--color-2))
+        );
+      background-clip: padding-box, border-box;
+      -webkit-background-clip: padding-box, border-box;
+      background-origin: border-box;
+      background-size: 200%;
+      animation: rainbow-slide 3s linear infinite;
+      color: #050505;
+      transition: transform 0.2s ease;
+    }
+    .rainbow-btn::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 6px;
+      z-index: -1;
+      background: linear-gradient(90deg,
+        hsl(var(--color-1)),
+        hsl(var(--color-5)),
+        hsl(var(--color-3)),
+        hsl(var(--color-4)),
+        hsl(var(--color-2))
+      );
+      background-size: 200%;
+      animation: rainbow-slide 3s linear infinite;
+      filter: blur(10px);
+      opacity: 0.5;
+      transition: opacity 0.3s ease;
+    }
+    .rainbow-btn:hover::before { opacity: 0.85; }
+    .rainbow-btn:active { transform: translateY(1px); }
+
+    /* ─── ShimmerButton ─────────────────────────────────────── */
+    @keyframes shimmer-slide {
+      to { transform: translate(calc(100cqw - 100%), 0); }
+    }
+    @keyframes spin-around {
+      0%   { transform: translateZ(0) rotate(0deg);   }
+      100% { transform: translateZ(0) rotate(360deg); }
+    }
+    .shimmer-btn {
+      position: relative;
+      z-index: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.3s ease;
+    }
+    .shimmer-btn:active { transform: translateY(1px); }
+    .shimmer-spark-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      overflow: visible;
+      container-type: size;
+      filter: blur(1px);
+    }
+    .shimmer-spark {
+      position: absolute;
+      inset: 0;
+      height: 100cqh;
+      aspect-ratio: 1;
+      animation: shimmer-slide var(--s-speed, 3s) ease-in-out infinite alternate;
+    }
+    .shimmer-conic {
+      position: absolute;
+      inset: -100%;
+      width: auto;
+      animation: spin-around calc(var(--s-speed, 3s) * 2) linear infinite;
+      background: conic-gradient(
+        from calc(270deg - (var(--s-spread, 90deg) * 0.5)),
+        transparent 0,
+        var(--s-color, rgba(255,255,255,0.8)) calc(var(--s-spread, 90deg) * 0.5),
+        transparent var(--s-spread, 90deg)
+      );
+    }
+    .shimmer-hl {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: inset 0 -8px 10px rgba(255,255,255,0.1);
+      transition: box-shadow 0.3s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .shimmer-btn:hover .shimmer-hl { box-shadow: inset 0 -6px 10px rgba(255,255,255,0.22); }
+    .shimmer-btn:active .shimmer-hl { box-shadow: inset 0 -10px 10px rgba(255,255,255,0.22); }
+    .shimmer-bd {
+      position: absolute;
+      z-index: -2;
+      background: var(--s-bg, #050505);
+      inset: var(--s-cut, 1px);
+      border-radius: inherit;
+    }
+    .shimmer-content { position: relative; z-index: 10; }
+
+    /* ─── Expand-panel button (GetStarted-style) ─────────────── */
+    .btn-expand {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-expand .btn-label {
+      display: inline-block;
+      transition: opacity 0.45s ease;
+      margin-right: 2rem;
+    }
+    .btn-expand:hover .btn-label { opacity: 0; }
+    .btn-expand .btn-panel {
+      position: absolute;
+      right: 4px;
+      top: 4px;
+      bottom: 4px;
+      width: 26%;
+      border-radius: 2px;
+      display: grid;
+      place-items: center;
+      transition: width 0.45s cubic-bezier(.16,1,.3,1);
+      z-index: 10;
+    }
+    .btn-expand:hover .btn-panel { width: calc(100% - 8px); }
+    .btn-expand:active .btn-panel { transform: scale(0.97); }
+
+    /* ─── Fill button (Email Me / misc) ─────────────────────── */
+    .btn-fill {
+      position: relative;
+      overflow: hidden;
+      transition: filter 0.3s ease, transform 0.3s ease;
+    }
+    .btn-fill:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .btn-fill:active { transform: translateY(0); filter: brightness(0.96); }
+
+    /* ─── CTA slide-fill (dark on white bg) ─────────────────── */
+    .btn-slide {
+      position: relative;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .btn-slide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #111;
+      transform: translateY(101%);
+      transition: transform 0.38s cubic-bezier(.16,1,.3,1);
+      z-index: -1;
+    }
+    .btn-slide:hover::after { transform: translateY(0); }
+    .btn-slide:hover { color: #fff; border-color: #111; }
+
+    /* ─── Scroll Reveal ─────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s cubic-bezier(.22,1,.36,1), transform 0.9s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-32px);
+      transition: opacity 0.9s cubic-bezier(.22,1,.36,1), transform 0.9s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(32px);
+      transition: opacity 0.9s cubic-bezier(.22,1,.36,1), transform 0.9s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 0.9s cubic-bezier(.22,1,.36,1), transform 0.9s cubic-bezier(.22,1,.36,1);
+    }
+    .visible {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    /* ─── Marquee ───────────────────────────────────────────── */
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 36s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+
+    /* ─── Glow helpers ──────────────────────────────────────── */
+    .accent-glow    { text-shadow: 0 0 40px rgba(212,175,55,0.28); }
+    .btn-accent-glow:hover { box-shadow: 0 0 24px rgba(212,175,55,0.35); }
+
+    /* ─── Pill tags ─────────────────────────────────────────── */
+    .tech-pill {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.625rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9CA3AF;
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 4px 12px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .tech-pill:hover { border-color: #D4AF37; color: #D4AF37; }
+
+    /* ─── Nav link underline ────────────────────────────────── */
+    a.nav-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6B7280 !important;
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+    a.nav-link:hover { color: #ffffff !important; }
+
+    /* ─── Footer nav links ──────────────────────────────────── */
+    a.footer-nav-link {
+      color: #6B7280 !important;
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+    a.footer-nav-link:hover { color: #ffffff !important; }
+
+    /* ─── Service card grid border trick + 3D depth ─────────── */
+    .service-grid > div {
+      position: relative;
+      background-color: #0f0f0f;
+      transition: background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: translateZ(0);
+      will-change: transform;
+    }
+    .service-grid > div:hover {
+      transform: translateY(-6px) translateZ(0);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      background-color: #141414;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 1px;
+      background-color: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    @media (min-width: 768px)  { .service-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .service-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    /* ─── Scroll indicator line ─────────────────────────────── */
+    .scroll-line {
+      background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent);
+    }
+
+    /* ─── White contact section accent ─────────────────────── */
+    .accent-dark { color: #4a7c00; }
+
+    /* ─── Newsletter input ──────────────────────────────────── */
+    input::placeholder { color: #4B5563; }
+    input:focus { outline: none; }
+
+    /* ─── Mobile menu transition ────────────────────────────── */
+    [x-cloak] { display: none !important; }
+
+    /* ─── Case study cards ──────────────────────────────────── */
+    .case-card {
+      background: #0f0f0f;
+      border: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transform: translateZ(0);
+      will-change: transform;
+      transition: border-color 0.45s ease,
+                  transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  background-color 0.45s ease;
+    }
+    .case-card:hover {
+      border-color: rgba(255,255,255,0.12);
+      background-color: #131313;
+      transform: translateY(-6px) translateZ(0);
+    }
+    .case-card .card-accent-line {
+      height: 1px;
+      background: linear-gradient(90deg, rgba(212,175,55,0.7), rgba(212,175,55,0.1));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .case-card:hover .card-accent-line { transform: scaleX(1); }
+    .case-card .card-num { color: rgba(255,255,255,0.18); transition: color 0.3s ease; }
+    .case-card:hover .card-num { color: rgba(212,175,55,0.6); }
+
+    /* ─── Flow Button (Email Me) ────────────────────────────── */
+    .flow-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      overflow: hidden;
+      border-radius: 100px;
+      border: 1.5px solid rgba(17,17,17,0.4);
+      background: transparent;
+      padding: 12px 32px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #111111;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 600ms cubic-bezier(0.23,1,0.32,1),
+                  color 600ms cubic-bezier(0.23,1,0.32,1),
+                  border-radius 600ms cubic-bezier(0.23,1,0.32,1);
+    }
+    .flow-btn:hover {
+      border-color: transparent;
+      color: #ffffff;
+      border-radius: 12px;
+    }
+    .flow-btn:active { transform: scale(0.95); }
+
+    /* expanding circle fill */
+    .flow-btn .flow-circle {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px; height: 16px;
+      background: #111111;
+      border-radius: 50%;
+      opacity: 0;
+      transition: width 800ms cubic-bezier(0.19,1,0.22,1),
+                  height 800ms cubic-bezier(0.19,1,0.22,1),
+                  opacity 800ms cubic-bezier(0.19,1,0.22,1);
+    }
+    .flow-btn:hover .flow-circle {
+      width: 280px; height: 280px; opacity: 1;
+    }
+
+    /* text */
+    .flow-btn .flow-text {
+      position: relative;
+      z-index: 1;
+      transform: translateX(-4px);
+      transition: transform 800ms ease-out;
+    }
+    .flow-btn:hover .flow-text { transform: translateX(6px); }
+
+    /* left arrow (slides in) */
+    .flow-btn .flow-arr-left {
+      position: absolute;
+      left: -28px;
+      z-index: 9;
+      width: 16px; height: 16px;
+      stroke: #111111;
+      fill: none;
+      transition: left 800ms cubic-bezier(0.34,1.56,0.64,1),
+                  stroke 600ms ease;
+    }
+    .flow-btn:hover .flow-arr-left { left: 14px; stroke: #ffffff; }
+
+    /* right arrow (slides out) */
+    .flow-btn .flow-arr-right {
+      position: absolute;
+      right: 16px;
+      z-index: 9;
+      width: 16px; height: 16px;
+      stroke: #111111;
+      fill: none;
+      transition: right 800ms cubic-bezier(0.34,1.56,0.64,1),
+                  stroke 600ms ease;
+    }
+    .flow-btn:hover .flow-arr-right { right: -28px; stroke: #ffffff; }
+
+    /* ─── Responsive polish ─────────────────────────────────── */
+    /* Tighter service/project card padding on small screens */
+    @media (max-width: 480px) {
+      .card-pad { padding: 1.5rem !important; }
+      .hero-cta a { width: 100%; justify-content: center; }
+    }
+
+    /* Ensure community flex-col on all mobile */
+    @media (max-width: 1023px) {
+      .community-layout { flex-direction: column; }
+    }
+
+    /* Stats ticker: reduce item padding on mobile */
+    @media (max-width: 640px) {
+      .ticker-item { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+    }
+  </style>
+</head>
+
+<body class="relative flex flex-col min-h-screen"
+      x-data="{ open: false, scrolled: false }"
+      @scroll.window="scrolled = (window.scrollY > 24)">
+
+<!-- Scroll progress bar -->
+<div id="scroll-progress"></div>
+
+<!-- ═══════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════════ -->
+<header class="fixed top-0 w-full z-50 transition-all duration-300"
+        :class="scrolled ? 'bg-dark/90 backdrop-blur-lg border-b border-dim' : 'bg-transparent'"
+        style="border-color: rgba(255,255,255,0.06);">
+  <div class="max-w-screen-2xl mx-auto px-5 sm:px-8 lg:px-14">
+    <div class="flex items-center justify-between h-20">
+
+      <!-- Logo -->
+      <a href="#" class="group flex items-center gap-3">
+        <div class="w-10 h-10 bg-white flex items-center justify-center font-serif text-lg font-bold text-dark group-hover:bg-accent transition-colors duration-300 select-none">
+          OF
+        </div>
+        <div class="hidden sm:block">
+          <span class="block font-mono text-xs tracking-widest text-white uppercase">Omar Flores</span>
+          <span class="block font-mono text-[10px] tracking-wider text-secondary uppercase">AI Systems</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="#work"  class="nav-link">Work</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="https://romanalabs.com" target="_blank"
+           class="shimmer-btn font-mono text-[11px] uppercase tracking-widest text-white px-5 py-2"
+           style="--s-bg:#050505; --s-color:#D4AF37; --s-speed:4s; --s-cut:1px; border:1px solid rgba(212,175,55,0.3); border-radius:6px; letter-spacing:0.1em;">
+          <div class="shimmer-spark-wrap"><div class="shimmer-spark"><div class="shimmer-conic"></div></div></div>
+          <span class="shimmer-content">Work With Me</span>
+          <div class="shimmer-hl"></div>
+          <div class="shimmer-bd"></div>
+        </a>
+      </nav>
+
+      <!-- Mobile Hamburger -->
+      <button @click="open = !open" class="md:hidden text-white p-2 focus:outline-none" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars text-xl"  x-show="!open"></i>
+        <i class="fa-solid fa-xmark text-xl" x-show="open" x-cloak></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Menu -->
+<div x-show="open" x-cloak
+     x-transition:enter="transition ease-out duration-200"
+     x-transition:enter-start="opacity-0 -translate-y-4"
+     x-transition:enter-end="opacity-100 translate-y-0"
+     x-transition:leave="transition ease-in duration-150"
+     x-transition:leave-start="opacity-100 translate-y-0"
+     x-transition:leave-end="opacity-0 -translate-y-4"
+     class="fixed inset-0 z-40 bg-dark pt-24 px-6 md:hidden flex flex-col">
+  <nav class="flex flex-col gap-6">
+    <a href="#work"     @click="open=false" class="font-serif text-3xl text-white border-b border-white/7 pb-5 hover:text-accent transition-colors" style="border-color:rgba(255,255,255,0.07);">Work</a>
+    <a href="#services" @click="open=false" class="font-serif text-3xl text-white border-b border-white/7 pb-5 hover:text-accent transition-colors" style="border-color:rgba(255,255,255,0.07);">Services</a>
+    <a href="#about"    @click="open=false" class="font-serif text-3xl text-white border-b border-white/7 pb-5 hover:text-accent transition-colors" style="border-color:rgba(255,255,255,0.07);">About</a>
+    <a href="#contact"  @click="open=false" class="font-serif text-3xl text-accent">Contact</a>
+  </nav>
+  <div class="mt-auto pb-12">
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+      <span class="font-mono text-xs text-secondary uppercase tracking-widest">System Online</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<section id="hero" class="grid-bg min-h-screen pt-28 pb-16 px-5 sm:px-8 lg:px-14 flex flex-col justify-center overflow-hidden">
+
+  <!-- BGPattern: outer shell has mask; inner div drifts via GPU transform -->
+  <div class="bg-pattern bg-mask-fade-edges">
+    <div class="bg-pattern-inner bg-pattern-grid bg-pattern-animate"></div>
+  </div>
+
+  <div class="max-w-7xl w-full mx-auto relative z-10">
+    <div id="hero-content" class="max-w-4xl space-y-6">
+
+      <!-- H1 -->
+      <h1 class="reveal font-serif leading-[0.88] tracking-tight text-white"
+          style="font-size: clamp(52px, 10vw, 128px); font-weight: 400;">
+        Building<br>
+        <span class="italic" style="color:#D4AF37;">Intelligent</span><br>
+        Systems.
+      </h1>
+
+      <!-- Subtext -->
+      <p class="reveal text-secondary font-light leading-relaxed max-w-xl"
+         style="font-size: clamp(16px, 1.4vw, 19px); transition-delay: 80ms;">
+        More than automation scripts. I build the <span class="text-white border-b" style="border-color:#D4AF37; padding-bottom:1px;">AI backbone</span> that powers real businesses.
+        From lead gen machines to content pipelines and custom workflows that actually work.
+      </p>
+
+      <!-- CTAs -->
+      <div class="reveal flex flex-wrap gap-3 pt-1" style="transition-delay: 160ms;">
+        <a href="https://www.youtube.com/@OmarFloresx" target="_blank"
+           class="shimmer-btn font-mono text-[11px] uppercase tracking-widest text-white px-5 py-2.5"
+           style="--s-bg:#050505; --s-color:#D4AF37; --s-speed:4s; --s-cut:1px; border:1px solid rgba(212,175,55,0.3); border-radius:6px; letter-spacing:0.1em;">
+          <div class="shimmer-spark-wrap"><div class="shimmer-spark"><div class="shimmer-conic"></div></div></div>
+          <span class="shimmer-content flex items-center gap-2"><i class="fa-brands fa-youtube text-[10px]"></i> Watch on YouTube</span>
+          <div class="shimmer-hl"></div>
+          <div class="shimmer-bd"></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     STATS TICKER (MARQUEE)
+══════════════════════════════════════════════ -->
+<div class="border-y overflow-hidden py-5 relative" style="border-color:rgba(255,255,255,0.07); background:#0f0f0f;">
+  <div class="marquee-track select-none">
+    <!-- Set 1 -->
+    <div class="flex items-center shrink-0" style="gap: 0;">
+      <div class="ticker-item flex items-center gap-4 px-10">
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">3+</span>
+        <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Years<br>Experience</span>
+      </div>
+      <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
+      <div class="ticker-item flex items-center gap-4 px-10">
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">50+</span>
+        <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Systems<br>Deployed</span>
+      </div>
+      <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
+      <div class="ticker-item flex items-center gap-4 px-10">
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">2.4k+</span>
+        <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Community<br>Members</span>
+      </div>
+      <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
+      <div class="ticker-item flex items-center gap-4 px-10">
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">20+</span>
+        <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Clients<br>Served</span>
+      </div>
+      <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
+      <div class="ticker-item flex items-center gap-4 px-10">
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">$500k+</span>
+        <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Revenue<br>Generated</span>
+      </div>
+      <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
+    </div>
+    <!-- Set 2 (duplicate for seamless loop) -->
+    <div class="flex items-center shrink-0" style="gap: 0;">
+      <div class="ticker-item flex items-center gap-4 px-10">
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">3+</span>
+        <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Years<br>Experience</span>
+      </div>
+      <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
+      <div class="ticker-item flex items-center gap-4 px-10">
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">50+</span>
+        <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Systems<br>Deployed</span>
+      </div>
+      <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
+      <div class="ticker-item flex items-center gap-4 px-10">
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">2.4k+</span>
+        <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Community<br>Members</span>
+      </div>
+      <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
+      <div class="ticker-item flex items-center gap-4 px-10">
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">20+</span>
+        <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Clients<br>Served</span>
+      </div>
+      <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
+      <div class="ticker-item flex items-center gap-4 px-10">
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">$500k+</span>
+        <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Revenue<br>Generated</span>
+      </div>
+      <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PHILOSOPHY
+══════════════════════════════════════════════ -->
+<section id="about" class="grid-bg py-24 px-5 sm:px-8 lg:px-14 bg-dark overflow-hidden">
+  <!-- BGPattern: outer shell has mask; inner div drifts via GPU transform -->
+  <div class="bg-pattern bg-mask-fade-edges">
+    <div class="bg-pattern-inner bg-pattern-grid bg-pattern-animate"></div>
+  </div>
+
+  <div class="max-w-4xl mx-auto text-center relative z-10">
+
+    <span class="reveal font-mono text-[11px] uppercase tracking-widest mb-6 block" style="color:#D4AF37;">// The Builder's Mindset</span>
+
+    <p class="reveal font-serif leading-[1.1] text-white mb-12"
+       style="font-size: clamp(30px, 4.8vw, 56px); transition-delay: 80ms;">
+      "Automation is the interface.<br>
+      <span class="italic text-secondary">Architecture</span> is the foundation."
+    </p>
+
+    <div class="reveal text-secondary font-light leading-relaxed space-y-5 text-left sm:text-center max-w-2xl mx-auto"
+         style="font-size: 18px; transition-delay: 160ms;">
+      <p>
+        Everyone's talking about "automating" their business with no-code tools. That's fine. But without a real plan behind it, those workflows break the moment something changes.
+      </p>
+      <p>
+        I don't just connect APIs. I design systems that think. Lead gen pipelines that qualify. Content machines that sound like you. Workflows that run 24/7 without babysitting.
+        It's the difference between a <strong class="text-white font-medium">hack</strong> and a <strong class="text-white font-medium">system</strong>.
+      </p>
+    </div>
+
+    <!-- Tech pills -->
+    <div class="reveal flex flex-wrap justify-center gap-3 mt-14" style="transition-delay: 240ms;">
+      <span class="tech-pill">Make.com</span>
+      <span class="tech-pill">Claude API</span>
+      <span class="tech-pill">Notion</span>
+      <span class="tech-pill">Apify</span>
+      <span class="tech-pill">N8N</span>
+      <span class="tech-pill">Python</span>
+      <span class="tech-pill">OpenAI</span>
+      <span class="tech-pill">Airtable</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SERVICES
+══════════════════════════════════════════════ -->
+<section id="services" class="py-16 px-5 sm:px-8 lg:px-14 border-y" style="border-color:rgba(255,255,255,0.07);">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 border-b pb-10" style="border-color:rgba(255,255,255,0.07);">
+      <div>
+        <span class="reveal font-mono text-[11px] text-accent uppercase tracking-widest mb-3 block">// Capabilities</span>
+        <h2 class="reveal font-serif text-white" style="font-size: clamp(42px, 5vw, 64px); transition-delay: 80ms;">
+          Full-Cycle Solutions.
+        </h2>
+      </div>
+      <div class="reveal md:max-w-xs pb-1 shrink-0" style="transition-delay: 120ms;">
+        <p class="text-secondary text-sm leading-relaxed mb-5">From a single workflow to your entire ops stack. Built to run without you in the loop.</p>
+        <a href="#contact" class="font-mono text-[11px] text-accent uppercase tracking-widest hover:text-white transition-colors duration-200 flex items-center gap-2">
+          Book a free audit <i class="fa-solid fa-arrow-right text-[9px]"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Cards grid -->
+    <div class="service-grid reveal" style="transition-delay: 160ms;">
+
+      <!-- 1. AI Automation Systems -->
+      <div class="bg-surface p-8 group flex flex-col h-full">
+        <div class="mb-auto">
+          <i class="fa-solid fa-robot text-4xl text-secondary group-hover:text-white mb-6 block transition-colors duration-200"></i>
+          <h3 class="font-serif text-2xl text-white mb-3">AI Automation Systems</h3>
+          <p class="text-sm text-secondary leading-relaxed">
+            End-to-end workflow automation built on Make.com, N8N, and custom Python. Real integrations that replace manual work across sales, ops, and support.
+          </p>
+        </div>
+        <ul class="mt-6 space-y-2 font-mono text-[10px] text-gray-500 uppercase">
+          <li>+ Make.com / N8N</li>
+          <li>+ Custom Webhooks</li>
+          <li>+ Claude / OpenAI</li>
+        </ul>
+      </div>
+
+      <!-- 2. Lead Gen Machines -->
+      <div class="bg-surface p-8 group flex flex-col h-full">
+        <div class="mb-auto">
+          <i class="fa-solid fa-bolt text-4xl text-secondary group-hover:text-white mb-6 block transition-colors duration-200"></i>
+          <h3 class="font-serif text-2xl text-white mb-3">Lead Gen Machines</h3>
+          <p class="text-sm text-secondary leading-relaxed">
+            Automated prospecting pipelines that scrape, qualify, and contact leads. Built with Apify, Clay, and AI enrichment so your inbox fills while you sleep.
+          </p>
+        </div>
+        <ul class="mt-6 space-y-2 font-mono text-[10px] text-gray-500 uppercase">
+          <li>+ Apify / Clay</li>
+          <li>+ AI Qualification</li>
+          <li>+ CRM Integration</li>
+        </ul>
+      </div>
+
+      <!-- 3. AI Content Systems -->
+      <div class="bg-surface p-8 group flex flex-col h-full">
+        <div class="mb-auto">
+          <i class="fa-solid fa-pen-nib text-4xl text-secondary group-hover:text-white mb-6 block transition-colors duration-200"></i>
+          <h3 class="font-serif text-2xl text-white mb-3">AI Content Systems</h3>
+          <p class="text-sm text-secondary leading-relaxed">
+            Content pipelines that research, write, and publish in your voice. Newsletter engines, social post generators, and repurposing flows on autopilot.
+          </p>
+        </div>
+        <ul class="mt-6 space-y-2 font-mono text-[10px] text-gray-500 uppercase">
+          <li>+ Beehiiv / Notion</li>
+          <li>+ Brand Voice AI</li>
+          <li>+ Multi-Platform</li>
+        </ul>
+      </div>
+
+      <!-- 4. Strategic Consulting -->
+      <div class="bg-surface p-8 group flex flex-col h-full">
+        <div class="mb-auto">
+          <i class="fa-solid fa-chess-knight text-4xl text-secondary group-hover:text-white mb-6 block transition-colors duration-200"></i>
+          <h3 class="font-serif text-2xl text-white mb-3">Strategic Consulting</h3>
+          <p class="text-sm text-secondary leading-relaxed">
+            Not sure where to start? I audit your current stack, identify the highest-ROI automation plays, and give you a clear roadmap. No fluff.
+          </p>
+        </div>
+        <ul class="mt-6 space-y-2 font-mono text-[10px] text-gray-500 uppercase">
+          <li>+ Stack Audit</li>
+          <li>+ Automation Roadmap</li>
+          <li>+ 1-on-1 Sessions</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     PROJECTS / CASE STUDIES
+══════════════════════════════════════════════ -->
+<section id="work" class="py-16 px-5 sm:px-8 lg:px-14 border-t" style="border-color:rgba(255,255,255,0.07);">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 border-b pb-10" style="border-color:rgba(255,255,255,0.07);">
+      <div>
+        <span class="reveal font-mono text-[11px] text-accent uppercase tracking-widest mb-3 block">// Case Studies</span>
+        <h2 class="reveal font-serif text-white" style="font-size: clamp(42px, 5vw, 64px); transition-delay: 80ms;">
+          Engineered Results.
+        </h2>
+      </div>
+      <div class="reveal md:max-w-xs pb-1 shrink-0" style="transition-delay: 120ms;">
+        <p class="text-secondary text-sm leading-relaxed">Real systems. Real outcomes. Every project starts with a problem worth solving, and ends with time back on your calendar.</p>
+      </div>
+    </div>
+
+    <!-- 2×2 Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <!-- Project 1: The SI Local -->
+      <article class="case-card group reveal reveal-scale" style="transition-delay: 0ms;">
+        <div class="aspect-[16/7] overflow-hidden relative flex items-center justify-center" style="background: #0d0d0d;">
+          <div class="absolute inset-0" style="background: rgba(0,0,0,0.18);"></div>
+          <i class="fa-solid fa-newspaper text-7xl text-secondary opacity-15 group-hover:opacity-35 group-hover:scale-105 transition-all duration-500" style="transition-timing-function: cubic-bezier(0.22,1,0.36,1);"></i>
+          <div class="absolute top-4 left-4 z-20">
+            <span class="card-num font-mono text-[11px] tracking-widest">01</span>
+          </div>
+          <div class="absolute top-4 right-4 z-20 px-2 py-1" style="background:rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.08);">
+            <span class="font-mono text-[10px] text-accent uppercase tracking-widest">Newsletter</span>
+          </div>
+        </div>
+        <div class="card-accent-line"></div>
+        <div class="p-6 flex flex-col flex-grow">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-serif text-xl text-white group-hover:text-accent transition-colors duration-300">The SI Local</h3>
+            <div class="w-7 h-7 border flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all duration-300 shrink-0 text-secondary group-hover:text-dark" style="border-color:rgba(255,255,255,0.15);">
+              <i class="fa-solid fa-arrow-right -rotate-45 text-[9px]"></i>
+            </div>
+          </div>
+          <p class="text-secondary leading-relaxed mb-5 flex-grow" style="font-size:13.5px;">
+            A community newsletter for the Santo Island local scene. Fully automated content pipeline: research, writing, and sending on schedule, all without manual work.
+          </p>
+          <div class="flex gap-2 flex-wrap pt-4 border-t" style="border-color:rgba(255,255,255,0.05);">
+            <span class="tech-pill">Beehiiv</span>
+            <span class="tech-pill">Make.com</span>
+            <span class="tech-pill">Claude API</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 2: Lead Scraping System -->
+      <article class="case-card group reveal reveal-scale" style="transition-delay: 100ms;">
+        <div class="aspect-[16/7] overflow-hidden relative flex items-center justify-center" style="background: #0d0d0d;">
+          <div class="absolute inset-0" style="background: rgba(0,0,0,0.18);"></div>
+          <i class="fa-solid fa-magnifying-glass-chart text-7xl text-secondary opacity-15 group-hover:opacity-35 group-hover:scale-105 transition-all duration-500" style="transition-timing-function: cubic-bezier(0.22,1,0.36,1);"></i>
+          <div class="absolute top-4 left-4 z-20">
+            <span class="card-num font-mono text-[11px] tracking-widest">02</span>
+          </div>
+          <div class="absolute top-4 right-4 z-20 px-2 py-1" style="background:rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.08);">
+            <span class="font-mono text-[10px] text-accent uppercase tracking-widest">Lead Gen</span>
+          </div>
+        </div>
+        <div class="card-accent-line"></div>
+        <div class="p-6 flex flex-col flex-grow">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-serif text-xl text-white group-hover:text-accent transition-colors duration-300">Lead Scraping System</h3>
+            <div class="w-7 h-7 border flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all duration-300 shrink-0 text-secondary group-hover:text-dark" style="border-color:rgba(255,255,255,0.15);">
+              <i class="fa-solid fa-arrow-right -rotate-45 text-[9px]"></i>
+            </div>
+          </div>
+          <p class="text-secondary leading-relaxed mb-5 flex-grow" style="font-size:13.5px;">
+            Automated prospecting machine that pulls leads from LinkedIn and Google Maps, enriches them with AI, and delivers a qualified list to a CRM every morning.
+          </p>
+          <div class="flex gap-2 flex-wrap pt-4 border-t" style="border-color:rgba(255,255,255,0.05);">
+            <span class="tech-pill">Apify</span>
+            <span class="tech-pill">Clay</span>
+            <span class="tech-pill">OpenAI</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 3: Client Automation Projects -->
+      <article class="case-card group reveal reveal-scale" style="transition-delay: 200ms;">
+        <div class="aspect-[16/7] overflow-hidden relative flex items-center justify-center" style="background: #0d0d0d;">
+          <div class="absolute inset-0" style="background: rgba(0,0,0,0.18);"></div>
+          <span class="font-mono text-5xl text-secondary opacity-15 group-hover:opacity-35 group-hover:scale-105 transition-all duration-500 select-none" style="transition-timing-function: cubic-bezier(0.22,1,0.36,1);">{AI}</span>
+          <div class="absolute top-4 left-4 z-20">
+            <span class="card-num font-mono text-[11px] tracking-widest">03</span>
+          </div>
+          <div class="absolute top-4 right-4 z-20 px-2 py-1" style="background:rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.08);">
+            <span class="font-mono text-[10px] text-accent uppercase tracking-widest">Client Work</span>
+          </div>
+        </div>
+        <div class="card-accent-line"></div>
+        <div class="p-6 flex flex-col flex-grow">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-serif text-xl text-white group-hover:text-accent transition-colors duration-300">Client Automations</h3>
+            <div class="w-7 h-7 border flex items-center justify-center group-hover:bg-white group-hover:border-white transition-all duration-300 shrink-0 text-secondary group-hover:text-dark" style="border-color:rgba(255,255,255,0.15);">
+              <i class="fa-solid fa-lock text-[9px]"></i>
+            </div>
+          </div>
+          <p class="text-secondary leading-relaxed mb-5 flex-grow" style="font-size:13.5px;">
+            Ongoing automation builds for clients across e-commerce, real estate, and agencies. From onboarding flows to AI customer support bots and internal ops tools.
+          </p>
+          <div class="flex gap-2 flex-wrap pt-4 border-t" style="border-color:rgba(255,255,255,0.05);">
+            <span class="tech-pill">N8N</span>
+            <span class="tech-pill">Make.com</span>
+            <span class="tech-pill">Notion API</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 4: Los Mina Unidos -->
+      <article class="case-card group reveal reveal-scale" style="transition-delay: 300ms;">
+        <div class="aspect-[16/7] overflow-hidden relative flex items-center justify-center" style="background: #0d0d0d;">
+          <div class="absolute inset-0" style="background: rgba(0,0,0,0.18);"></div>
+          <i class="fa-solid fa-people-group text-7xl text-secondary opacity-15 group-hover:opacity-35 group-hover:scale-105 transition-all duration-500" style="transition-timing-function: cubic-bezier(0.22,1,0.36,1);"></i>
+          <div class="absolute top-4 left-4 z-20">
+            <span class="card-num font-mono text-[11px] tracking-widest">04</span>
+          </div>
+          <div class="absolute top-4 right-4 z-20 px-2 py-1" style="background:rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.08);">
+            <span class="font-mono text-[10px] text-accent uppercase tracking-widest">Community</span>
+          </div>
+        </div>
+        <div class="card-accent-line"></div>
+        <div class="p-6 flex flex-col flex-grow">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-serif text-xl text-white group-hover:text-accent transition-colors duration-300">Los Mina Unidos</h3>
+            <div class="w-7 h-7 border flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all duration-300 shrink-0 text-secondary group-hover:text-dark" style="border-color:rgba(255,255,255,0.15);">
+              <i class="fa-solid fa-arrow-right -rotate-45 text-[9px]"></i>
+            </div>
+          </div>
+          <p class="text-secondary leading-relaxed mb-5 flex-grow" style="font-size:13.5px;">
+            A digital community platform connecting Los Mina residents. Content automation, community management tools, and an event notification system built from scratch.
+          </p>
+          <div class="flex gap-2 flex-wrap pt-4 border-t" style="border-color:rgba(255,255,255,0.05);">
+            <span class="tech-pill">Community</span>
+            <span class="tech-pill">Make.com</span>
+            <span class="tech-pill">Beehiiv</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     COMMUNITY
+══════════════════════════════════════════════ -->
+<section id="community" class="grid-bg py-16 px-5 sm:px-8 lg:px-14 border-t overflow-hidden" style="border-color:rgba(255,255,255,0.07); background:#0f0f0f;">
+  <!-- BGPattern: dots + fade-edges -->
+  <div class="bg-pattern bg-pattern-dots bg-mask-fade-edges" style="opacity: 0.5;"></div>
+
+  <div class="max-w-7xl mx-auto relative z-10">
+
+    <div class="community-layout flex flex-col lg:flex-row gap-16 items-center">
+
+      <!-- Left: Text -->
+      <div class="lg:w-1/2 space-y-6">
+        <span class="reveal font-mono text-[11px] uppercase tracking-widest block" style="color:#D4AF37;">// Community</span>
+        <h2 class="reveal font-serif text-white leading-tight" style="font-size: clamp(36px, 4vw, 52px); transition-delay: 80ms;">
+          Built in Public.
+        </h2>
+        <p class="reveal text-secondary leading-relaxed" style="font-size: 18px; transition-delay: 160px;">
+          Two communities. One for the builders learning AI automation, one for a neighborhood I care about.
+          Both powered by systems I built.
+        </p>
+
+        <div class="reveal space-y-6 pt-2" style="transition-delay: 240ms;">
+          <div class="border-l-2 pl-5" style="border-color:#D4AF37;">
+            <h4 class="font-serif text-xl text-white mb-1">The SI Local</h4>
+            <p class="text-secondary text-sm leading-relaxed">
+              A newsletter covering what's happening in Santo Island. Automated content pipeline, weekly sends, growing steadily.
+            </p>
+          </div>
+          <div class="border-l-2 pl-5" style="border-color:rgba(255,255,255,0.2);">
+            <h4 class="font-serif text-xl text-white mb-1">Los Mina Unidos Por Siempre</h4>
+            <p class="text-secondary text-sm leading-relaxed">
+              2,400+ residents connected through a digital community built on automations, notifications, and real conversations.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Newsletter signup card -->
+      <div class="lg:w-1/2 relative reveal-right" style="transition-delay: 200ms;">
+        <div class="relative border p-8 md:p-10 overflow-hidden" style="border-color:rgba(255,255,255,0.1); background:#050505; border-top:2px solid rgba(255,255,255,0.18);">
+          <span class="font-mono text-[10px] uppercase tracking-widest mb-6 block" style="color:#D4AF37;">// Newsletter</span>
+          <h3 class="font-serif text-2xl text-white mb-3">Join The SI Local</h3>
+          <p class="text-secondary text-sm leading-relaxed mb-8">
+            Get the weekly digest. What's happening in Santo Island, what I'm building, and automation ideas you can steal.
+          </p>
+          <form id="newsletter-form" class="flex flex-col sm:flex-row gap-3">
+            <input
+              id="newsletter-email"
+              type="email"
+              placeholder="your@email.com"
+              required
+              class="flex-1 bg-surface-h border px-4 py-3 font-mono text-sm text-white focus:border-accent transition-colors"
+              style="border-color:rgba(255,255,255,0.1);"
+            >
+            <button type="submit" class="btn-expand bg-accent text-dark px-6 py-3 font-mono text-sm uppercase tracking-widest whitespace-nowrap font-medium">
+              <span class="btn-label">Subscribe</span>
+              <span class="btn-panel" style="background:rgba(0,0,0,0.14);">
+                <i class="fa-solid fa-arrow-right -rotate-45 text-[10px] text-dark"></i>
+              </span>
+            </button>
+          </form>
+          <p id="newsletter-msg" class="font-mono text-[11px] mt-4 tracking-wide hidden"></p>
+          <p class="font-mono text-[11px] text-secondary/60 mt-4 tracking-wide">Weekly digest. No spam. One click to unsubscribe.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     CONTACT CTA
+══════════════════════════════════════════════ -->
+<section id="contact" class="grid-bg py-24 px-5 sm:px-8 lg:px-14 bg-white text-dark overflow-hidden">
+  <!-- BGPattern: dots + fade-edges (dark on white) -->
+  <div class="bg-pattern bg-mask-fade-edges bg-dots-drift" style="background-image: radial-gradient(rgba(0,0,0,0.22) 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+  <div class="max-w-5xl mx-auto text-center relative z-10">
+    <h2 class="reveal font-serif leading-[0.9] tracking-tight mb-6"
+        style="font-size: clamp(44px, 7vw, 88px); transition-delay: 80ms;">
+      Ready to automate<br>
+      <span class="italic" style="color: #D4AF37;">something real?</span>
+    </h2>
+    <p class="reveal text-gray-500 font-light max-w-lg mx-auto mb-6" style="font-size: 17px; transition-delay: 160ms;">
+      Got a project in mind? A process that wastes your team's time? Let's talk about what's actually possible.
+    </p>
+    <div class="mb-10"></div>
+    <div class="reveal flex flex-col sm:flex-row justify-center items-center gap-4" style="transition-delay: 240ms;">
+      <a href="mailto:omar@romanalabs.com" class="flow-btn">
+        <!-- left arrow slides in on hover -->
+        <svg class="flow-arr-left" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <span class="flow-text">Email Me</span>
+        <span class="flow-circle"></span>
+        <!-- right arrow slides out on hover -->
+        <svg class="flow-arr-right" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
+<footer class="bg-dark pt-12 pb-8 px-5 sm:px-8 lg:px-14 border-t" style="border-color:rgba(255,255,255,0.07);">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Top row: brand + social icons -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 pb-8 border-b" style="border-color:rgba(255,255,255,0.06);">
+
+      <!-- Brand -->
+      <div class="space-y-2">
+        <a href="#" class="font-serif text-2xl text-white block transition-colors duration-300 hover:text-accent">Omar Flores.</a>
+        <a href="https://romanalabs.com" target="_blank"
+           class="font-mono text-[10px] uppercase tracking-widest text-secondary hover:text-white transition-colors duration-200 flex items-center gap-1">
+          Romanalabs ↗
+        </a>
+      </div>
+
+      <!-- Social icons -->
+      <div class="flex items-center gap-3">
+        <a href="https://instagram.com/omarfloresx" target="_blank"
+           class="w-9 h-9 border flex items-center justify-center text-secondary hover:text-white hover:border-white/30 transition-all duration-200"
+           style="border-color:rgba(255,255,255,0.1);" aria-label="Instagram">
+          <i class="fa-brands fa-instagram text-sm"></i>
+        </a>
+        <a href="https://linkedin.com/in/omarrflores" target="_blank"
+           class="w-9 h-9 border flex items-center justify-center text-secondary hover:text-white hover:border-white/30 transition-all duration-200"
+           style="border-color:rgba(255,255,255,0.1);" aria-label="LinkedIn">
+          <i class="fa-brands fa-linkedin-in text-sm"></i>
+        </a>
+        <a href="https://twitter.com/omarflowers_" target="_blank"
+           class="w-9 h-9 border flex items-center justify-center text-secondary hover:text-white hover:border-white/30 transition-all duration-200"
+           style="border-color:rgba(255,255,255,0.1);" aria-label="Twitter/X">
+          <i class="fa-brands fa-x-twitter text-sm"></i>
+        </a>
+        <a href="https://github.com/OmarflorexAI" target="_blank"
+           class="w-9 h-9 border flex items-center justify-center text-secondary hover:text-white hover:border-white/30 transition-all duration-200"
+           style="border-color:rgba(255,255,255,0.1);" aria-label="GitHub">
+          <i class="fa-brands fa-github text-sm"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Bottom row: nav links + status -->
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6">
+
+      <!-- Nav links -->
+      <nav class="flex flex-wrap gap-x-6 gap-y-2 justify-center sm:justify-start">
+        <a href="#work"      class="footer-nav-link font-mono text-[10px] uppercase tracking-widest transition-colors">Work</a>
+        <a href="#services"  class="footer-nav-link font-mono text-[10px] uppercase tracking-widest transition-colors">Services</a>
+        <a href="#community" class="footer-nav-link font-mono text-[10px] uppercase tracking-widest transition-colors">Community</a>
+        <a href="mailto:omar@romanalabs.com" class="footer-nav-link font-mono text-[10px] uppercase tracking-widest transition-colors">Contact</a>
+      </nav>
+
+      <!-- Copyright -->
+      <p class="font-mono text-[10px] text-gray-600">© <span id="year"></span> Omar Flores</p>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════ -->
+<script>
+  // ─── Year ────────────────────────────────────
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ─── Scroll Progress Bar ─────────────────────
+  const progressBar = document.getElementById('scroll-progress');
+  function updateProgress() {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = total > 0 ? (window.scrollY / total) * 100 : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+
+  // ─── Hero Parallax ───────────────────────────
+  const heroContent = document.getElementById('hero-content');
+  const heroSection = document.getElementById('hero');
+  function updateParallax() {
+    if (!heroContent || !heroSection) return;
+    const scrolled = window.scrollY;
+    const heroH    = heroSection.offsetHeight;
+    if (scrolled < heroH) {
+      const t = scrolled / heroH;
+      heroContent.style.transform = `translateY(${scrolled * 0.12}px)`;
+      heroContent.style.opacity   = String(Math.max(0, 1 - t * 1.8));
+    }
+  }
+  window.addEventListener('scroll', updateParallax, { passive: true });
+
+  // ─── Scroll Reveal (bidirectional) ────────────
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      } else {
+        // Fade out when scrolling back up (exit from top)
+        if (entry.boundingClientRect.top > 0) return; // exiting bottom — don't hide
+        entry.target.classList.remove('visible');
+      }
+    });
+  }, {
+    threshold: 0.06,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale')
+    .forEach(el => revealObserver.observe(el));
+
+  // ─── revealAll() — for Puppeteer screenshots ─
+  function revealAll() {
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale')
+      .forEach(el => el.classList.add('visible'));
+    if (heroContent) {
+      heroContent.style.transform = 'none';
+      heroContent.style.opacity   = '1';
+    }
+  }
+
+  // ─── Stagger child reveals inside sections ───
+  document.querySelectorAll('section').forEach(section => {
+    const items = section.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+    items.forEach((el, i) => {
+      if (!el.style.transitionDelay) {
+        el.style.transitionDelay = `${i * 70}ms`;
+      }
+    });
+  });
+
+  // ─── Newsletter Webhook ──────────────────────
+  const newsletterForm = document.getElementById('newsletter-form');
+  const newsletterMsg  = document.getElementById('newsletter-msg');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('newsletter-email').value.trim();
+      if (!email) return;
+
+      const btn = newsletterForm.querySelector('button[type="submit"]');
+      btn.disabled = true;
+
+      try {
+        await fetch('https://hook.us2.make.com/o2dkg4r2t7hs7qnenxbkv8iyrept62ar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, source: 'omar-flores-website', timestamp: new Date().toISOString() }),
+        });
+        newsletterMsg.textContent = "You're in. First issue hits your inbox this week.";
+        newsletterMsg.style.color = '#D4AF37';
+        newsletterMsg.classList.remove('hidden');
+        newsletterForm.reset();
+      } catch {
+        newsletterMsg.textContent = 'Something went wrong. Try again in a moment.';
+        newsletterMsg.style.color = '#ef4444';
+        newsletterMsg.classList.remove('hidden');
+        btn.disabled = false;
+      }
+    });
+  }
+
+</script>
+
+
+
+</body>
+</html>
