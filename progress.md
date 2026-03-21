@@ -1,137 +1,140 @@
 # Progress Checkpoint
-> Last updated: 2026-03-20 by context-checkpoint
-> Context usage at time of checkpoint: ~75%
+> Last updated: 2026-03-21 by context-checkpoint skill
+> Context usage at time of checkpoint: ~85%
 
 ## Project Overview
 
-Personal portfolio site for **Omar Flores** — AI automation expert. Single `index.html` at `c:\Users\admin\Projects\Omarflores_website\index.html`. Tailwind CSS CDN, vanilla JS, Alpine.js, dark mode. Brand accent: gold `#D4AF37`. Design reference: eriktaveras.com.
+Personal brand portfolio site for **Omar Flores** — AI automation expert. Single `index.html` at `c:\Users\admin\Projects\Omarflores_website\index.html`. Tailwind CSS CDN, vanilla JS, Alpine.js, dark mode. Brand accent: gold `#D4AF37`. Design reference: eriktaveras.com.
+
+**IMPORTANT:** This is Omar's **personal brand site**, NOT his business site. His business site is `romanalabs.com`. The site should feel like "sharing what I'm doing," not pitching services. Avoid hard CTAs, booking language, or sales pressure.
 
 ---
 
 ## What Has Been Accomplished
 
-### From session 1 (previous checkpoint)
-1. **Full site built** — `index.html` with all sections: Navbar → Hero → Stats Ticker → Philosophy → Capabilities → Case Studies → Community → Contact CTA → Footer
-2. **Brand colors applied** — Tailwind `accent: '#D4AF37'` (gold), replaced all lime/green `#CCFF00` instances site-wide
+### Session 1 (site build)
+1. **Full site built** — `index.html` with all sections: Navbar → Hero → Stats Ticker → Philosophy → Services → Case Studies → Community → Contact CTA → Footer
+2. **Brand colors** — Tailwind `accent: '#D4AF37'` (gold). All lime/green `#CCFF00` replaced.
 3. **Fonts** — DM Sans (body), Instrument Serif (headings), JetBrains Mono (mono/labels). Never Inter/Roboto/Arial.
-4. **Scroll reveal** — Bidirectional IntersectionObserver. `opacity 0` → `opacity 1`. NO `will-change` on `.reveal` elements (was root cause of blurriness). `.visible { opacity:1!important; transform:none!important; }`.
-5. **Font smoothing** — `-webkit-font-smoothing: antialiased`, `-moz-osx-font-smoothing: grayscale`, `text-rendering: optimizeLegibility` on body.
-6. **Newsletter webhook** — Form POSTs JSON `{ email, source: 'omar-flores-website', timestamp }` to `https://hook.us2.make.com/o2dkg4r2t7hs7qnenxbkv8iyrept62ar`. Verified working.
-7. **Screenshot workflow** — `screenshot.js` saves mobile (423px) + desktop (1440px) full-page + 7 section clips to `screenshots/`.
-8. **Service card animation** — smooth `cubic-bezier(0.22,1,0.36,1)`, `backface-visibility:hidden`, unified 0.45s timing.
-9. **Buttons** — Shimmer (`.shimmer-btn`) for navbar + hero; Rainbow (`.rainbow-btn`) for contact CTA. Liquid Metal dependency fully removed.
-10. **Social URLs** — Instagram: `omarfloresx`, LinkedIn: `omarrflores` (double-r), Twitter: `omarflowers_`, GitHub: `OmarflorexAI`.
+4. **Scroll reveal** — Bidirectional IntersectionObserver. NO `will-change` on `.reveal` (was root cause of blurriness).
+5. **Font smoothing** — `-webkit-font-smoothing: antialiased`, `-moz-osx-font-smoothing: grayscale` on body.
+6. **Newsletter webhook** — Form POSTs JSON `{ email, source, timestamp }` to `https://hook.us2.make.com/o2dkg4r2t7hs7qnenxbkv8iyrept62ar`.
+7. **Screenshot workflow** — `screenshot.js` saves mobile (423px) + desktop (1440px) full-page + section clips to `screenshots/`.
+8. **Shimmer buttons** — `.shimmer-btn` for navbar + hero. `--s-bg:#050505` (NOT `#0A0D0B`).
+9. **Social URLs** — Instagram: `omarfloresx`, LinkedIn: `omarrflores` (double-r), Twitter: `omarflowers_`, GitHub: `OmarflorexAI`.
 
-### From session 2 (this session)
+### Session 2 (design polish)
+10. **Nav link colors** — `.nav-link` uses `a.nav-link` + `!important` to beat Tailwind cascade. Gray → white on hover.
+11. **Logo hover fixed** — Only `OF` box turns gold. "Omar Flores" text always white. Subtitle changed to "AI Systems".
+12. **Service cards** — Lift + gold top border + inner glow on hover. No external dark shadows (invisible on `#050505`).
+13. **Case study cards** — `.case-card` class. Gold `card-accent-line` slides in. Numbered `card-num`. Layered black shadows for depth.
+14. **Footer** — `.footer-nav-link` class for gray → white hover. Romanalabs link fixed.
 
-11. **Nav bar tabs color** — Changed `.nav-link` selector to `a.nav-link` with `color: #6B7280 !important` and `hover: #ffffff !important` to beat Tailwind cascade. Work and About tabs are now gray → white on hover.
+### Session 3 (copywriting overhaul — Gary Halbert direct response + personal brand)
 
-12. **Logo hover fixed** — Previously the entire logo group turned gold on hover. Fixed:
-    - Removed CSS rule `.logo-group:hover .logo-name { color: #D4AF37 }`
-    - Removed `logo-group` class from the `<a>` tag
-    - "Omar Flores" text (`<span>`) no longer changes color — stays white always
-    - Only the `OF` icon box turns gold (`group-hover:bg-accent`) on hover
-    - "AI Automation" text changed to **"AI Systems"**
-
-13. **Capabilities section cards — animation and shadow fixed**:
-    - Removed conflicting Tailwind `transition-colors hover:bg-surface-h` classes from card HTML (was causing glitch by double-transitioning background)
-    - Card now managed purely by `.service-grid > div` CSS
-    - Default: `box-shadow: none; transform: translateZ(0)` — clean GPU baseline
-    - Hover: `transform: translateY(-4px) translateZ(0)` — subtle lift
-    - Shadow: `inset 0 0 60px rgba(212,175,55,0.03), inset 0 1px 0 rgba(255,255,255,0.06)` — subtle inner gold glow + top highlight ONLY. No external dark shadow (invisible on dark bg).
-    - Gold top border: `border-top-color: rgba(212,175,55,0.6)`
-    - Background shifts: `#0f0f0f` → `#161616`
-    - Key lesson: dark `box-shadow` values like `rgba(0,0,0,0.7)` are INVISIBLE on a `#050505` near-black background. Don't use external dark shadows on this site.
-
-14. **Case study cards — fully rebuilt**:
-    - New CSS class `.case-card` (replaces inline border + flex styles)
-    - Added numbered index `01`–`04` top-left of each card's image area
-    - Gold accent line (`card-accent-line`) slides in from left on hover using `scaleX(0) → scaleX(1)` transform
-    - Number `card-num` fades from `rgba(255,255,255,0.18)` → `rgba(212,175,55,0.6)` on hover
-    - Separator `border-t` between description and tech pills
-    - Image area: `background:#111`, subtle diagonal gold tint, gradient overlay
-    - Hover: `translateY(-6px)` lift + layered dark shadow:
-      ```
-      0 2px 4px rgba(0,0,0,1),
-      0 6px 12px rgba(0,0,0,0.95),
-      0 16px 32px rgba(0,0,0,0.85),
-      0 32px 64px rgba(0,0,0,0.6)
-      ```
-      (Layered near→far shadows create 3D depth/pressing effect)
-    - Border on hover: `rgba(255,255,255,0.12)` (subtle white, not gold)
-    - `group` class on `<article>` for Tailwind `group-hover:` utilities on children
-
-15. **Footer "Romanalabs ↗" hover fixed** — Changed from opacity trick (`opacity-60 hover:opacity-100`) to clean color transition: `text-secondary hover:text-white transition-colors`. The opacity fade was appearing glitchy.
-
-16. **Footer nav links fixed** — Added new CSS class `.footer-nav-link` with `color: #6B7280 !important; hover: #ffffff !important`. All four footer links (Work, Services, Community, Contact) now explicitly gray → white, beating the Tailwind cascade.
+15. **Navbar CTA** — "Work With Me" → "Get in Touch", links to `https://romanalabs.com` (new tab).
+16. **Hero H1** — Kept original structure: "Building / Intelligent (italic gold) / Systems."
+17. **Hero subtext** — 4 punchy sentences, proof-forward, no em dash: "I build the AI backbone that drives real results. A furniture store made $200K. A local business hit #1 on Google in six months. Done for you, built to last, without the tech headache."
+18. **Hero CTA** — "Watch on YouTube" with `fa-brands fa-youtube` icon, links to `https://www.youtube.com/@OmarFloresx`.
+19. **Stats ticker** — "$500k+ Revenue Generated" → "$200k+ Generated for One Client" (both Set 1 and Set 2 updated).
+20. **Philosophy section** — Fully rewritten as personal brand mission:
+    - Label: `// The Bigger Picture`
+    - Quote: "AI is the great equalizer. Most people are sleeping on it."
+    - Body P1: "I'm Omar Flores. I help people master AI agents, build automations, and use AI to improve their lives. But what actually drives me is bigger than that: we're living through the most powerful shift in how business gets done..."
+    - Body P2: Small businesses can now punch like enterprises. AI removes the unfair advantage of big budgets.
+    - Body P3 closer: **"Your competitors aren't waiting. Neither should you."** (bold white)
+    - Tech pills (Make.com, Claude API, Notion, Apify, N8N, Python, OpenAI, Airtable) — unchanged.
+21. **Services section**:
+    - Label: `// What I Build`
+    - Heading: "Systems That Pay for Themselves." (single line, no `<br>`)
+    - "Book a Free Call" link removed
+    - Card descriptions rewritten with outcome language
+22. **Projects section**:
+    - Label: `// Results`
+    - Heading: "Real Businesses. Real Numbers." (single line, no `<br>`)
+    - Project 1: "$200K in New Revenue" — furniture store 3D visualization (E-Commerce, fa-cube)
+    - Project 2: "#1 on Google in 6 Months" — AI-driven SEO system (SEO + AI)
+    - Project 3: "Automated Lead Pipeline" — LinkedIn/Google Maps scraper (Lead Gen, fa-database)
+    - Project 4: "Content on Autopilot" — newsletter + social pipelines (Content + Ops, fa-pen-nib)
+23. **Testimonials section** — Added then removed at user request. Does not exist in file.
+24. **Community section (left side)** — Rewritten to personal brand:
+    - Label: `// Building in Public`, Heading: "Sharing the Process."
+    - Item 1: YouTube — walkthroughs, tutorials, case studies
+    - Item 2: Weekly Newsletter — what I'm working on, what's working
+25. **Newsletter card** — Personal brand rewrite:
+    - Title: "Tap Into My Brain."
+    - Body: "You're one email sign-up away from tapping into my brain. I share everything I learn about AI and building real systems, through writing and on YouTube. No gatekeeping. No fluff."
+    - Fine print: "Weekly. No spam. Unsubscribe anytime."
+26. **Contact / bottom section** — Clean, non-pitchy closing:
+    - Heading: "Doing cool things with AI." / italic gold: "To change the world (for the better)."
+    - No subtext, no button, no CTA. Statement only.
+    - "Your competitors aren't waiting. Neither should you." moved to Philosophy section.
 
 ---
 
 ## Current State
 
-- `index.html` — ~1600+ lines, fully functional. All sections intact.
-- No build system. No external files. Everything inline.
-- `.button-wrap` CSS (~260 lines) still present as dead code (no `.button-wrap` elements in HTML). Not breaking anything.
+- `index.html` — only modified file. All changes are **unstaged** (not committed to git).
+- Git branch: `master`. Last commit: `f7a7739 final personal website, all linked up`.
+- Site is **not yet deployed**. Next task is Cloudflare deployment.
+- No broken HTML. No banned words. No em dashes in visible copy.
 
-**CSS class inventory for key components:**
-| Class | Purpose |
-|---|---|
-| `.nav-link` | Navbar desktop links (Work, About) — gray → white hover |
-| `.footer-nav-link` | Footer nav links — gray → white hover |
-| `.service-grid` | 4-col grid for Capabilities cards |
-| `.service-grid > div` | Individual capability card — lift + gold top border on hover |
-| `.case-card` | Case study card — lift + dark shadow on hover |
-| `.case-card .card-accent-line` | Gold slide-in line on hover |
-| `.case-card .card-num` | Project number (01–04) |
-| `.shimmer-btn` | Navbar + Hero buttons |
-| `.rainbow-btn` | Contact CTA "Email Me" button |
-
-**Active button inventory:**
+**Current button inventory:**
 | Location | Style | Label | Link |
 |---|---|---|---|
-| Navbar desktop | `.shimmer-btn` | Work With Me | romanalabs.com |
-| Hero CTA | `.shimmer-btn` | Watch on YouTube | youtube.com/@OmarFloresx |
-| Contact CTA | `.rainbow-btn` | Email Me | mailto:omar@romanalabs.com |
-
----
-
-## Known Issues / Minor Remaining Items
-
-1. **`.button-wrap` dead CSS** — ~260 lines of glass button CSS (lines ~208–477) plus `@property --angle-1/2` are unused. Harmless but could be cleaned up.
-2. **External dark shadows are invisible** — The site background is `#050505`. Any `box-shadow` using `rgba(0,0,0,x)` will be invisible. Use inset glows, border highlights, or the layered case-card approach (stacking multiple black shadows at different radii) to create depth.
+| Navbar desktop | `.shimmer-btn` | Get in Touch | `https://romanalabs.com` (new tab) |
+| Hero CTA | `.shimmer-btn` | Watch on YouTube | `https://www.youtube.com/@OmarFloresx` (new tab) |
+| Contact section | — | (none — section has no button) | — |
 
 ---
 
 ## What Comes Next
 
-_No active task queued. Wait for user instructions._
+1. **Commit changes to git:**
+   ```bash
+   cd c:\Users\admin\Projects\Omarflores_website
+   git add index.html
+   git commit -m "Copy overhaul: personal brand rewrite with Gary Halbert principles"
+   git push origin master
+   ```
 
-Potential follow-ups:
-1. Any further section/design refinements
-2. Clean up dead `.button-wrap` CSS if user wants leaner file
-3. Deployment or further QA rounds
+2. **Deploy to Cloudflare Pages** — static site, no build step needed:
+   - Option A (recommended): Connect GitHub repo to Cloudflare Pages dashboard. Set root directory to `/`, no build command, output directory `/`.
+   - Option B (CLI): `npx wrangler pages deploy . --project-name=omarflores-website`
+   - Option C: Drag-and-drop `index.html` + assets via Cloudflare Pages dashboard.
+
+3. **Screenshot QA** — run `node screenshot.js` after deploy to verify rendering:
+   ```bash
+   node screenshot.js
+   ```
+   Check `screenshots/` folder. Do at least 2 comparison rounds per CLAUDE.md rules.
+
+4. **Custom domain** — If Omar has a domain, configure it in Cloudflare Pages settings after deploy.
+
+5. **Future: Real testimonials** — When Omar collects client quotes, add a 3-card testimonials section between projects and community sections. Use `bg-surface border border-dim` card pattern matching the rest of the site.
+
+6. **Future: Calendly link** — If Omar wants a direct booking link, swap `href` on the navbar "Get in Touch" shimmer button from `romanalabs.com` to the Calendly URL.
 
 ---
 
 ## Active Decisions & Context
 
-- **Single `index.html` only** — no build system, no external files. Everything inline.
-- **Brand palette**: `#D4AF37` (gold) for accents. Never lime `#CCFF00`.
+- **Personal brand, not sales site.** No CTAs, no "Book a call" language, no pressure. The site sells itself by being excellent.
+- **Business site is romanalabs.com.** "Get in Touch" navbar button links there.
+- **No em dashes in visible copy** — hard rule. Commas, periods, or new sentences instead.
+- **Banned words:** leverage, showcase, utilize, facilitate, streamline, optimize, delve, navigate, landscape, robust, seamless, comprehensive, cutting-edge, revolutionary, game-changer, transform, elevate, empower, foster, harness, spearhead, synergy, paradigm, holistic, innovative, dynamic, strategize, amplify, bolster.
+- **Banned phrases:** "in today's [anything]", "it's no secret that", "in the world of", "when it comes to", "at the end of the day", "needless to say".
+- **Gary Halbert copy principles:** specificity over vague claims, proof-forward, short punchy sentences, varied length, lead with the reader's pain or desire.
+- **"Your competitors aren't waiting. Neither should you."** — lives in Philosophy section (// The Bigger Picture) as the bold closing line. Omar confirmed he loves it there. Do NOT move it.
+- **"Tap Into My Brain."** — newsletter card title. Body opens with Omar's exact words verbatim.
+- **Hero subtext** — references $200K furniture store and #1 Google ranking. These are the two strongest proof points.
+- **Contact section** — intentionally minimal. Headline only, no button, no subtext.
+- **The SI Local / Los Mina Unidos** — side projects, removed from community section. Community section now focuses on YouTube and newsletter.
 - **No `will-change` on `.reveal` elements** — removing this fixed site-wide blurriness. Do NOT add it back.
-- **`transform: none`** in `.visible` class (not `translateY(0)`) — matters for GPU compositing sharpness.
-- **Dark shadows on dark bg** — `rgba(0,0,0,x)` shadows are invisible on `#050505`. For capability cards: use inset gold glow. For case study cards: stack multiple pure-black shadows at increasing radii (layered shadow technique).
-- **Nav/footer link colors** — Tailwind cascade overrides plain `.nav-link` color. Must use `a.nav-link` selector + `!important` to guarantee gray color.
-- **Logo hover** — Only the `OF` box changes color (gold). "Omar Flores" text stays white. "AI Systems" (not "AI Automation") is the subtitle.
-- **Shimmer button bg**: `--s-bg:#050505` (NOT `#0A0D0B` — that has a green tint).
-- **Screenshot QA rule** — run `node screenshot.js` after changes. CSS animations (shimmer, rainbow, dots drift) are NOT visible in static Puppeteer screenshots — expected.
-- **Omar's email**: `omar@romanalabs.com`
-- **Omar's YouTube**: `https://www.youtube.com/@OmarFloresx`
-- **Omar's Twitter/X**: `@omarflowers_` (note: "flowers" not "flores")
-- **Omar's Instagram**: `@omarfloresx`
-- **Omar's GitHub**: `https://github.com/OmarflorexAI`
-- **Omar's LinkedIn**: `https://linkedin.com/in/omarrflores` (double-r)
-- **Romanalabs**: `https://romanalabs.com`
-- **Webhook URL**: `https://hook.us2.make.com/o2dkg4r2t7hs7qnenxbkv8iyrept62ar`
+- **External dark shadows invisible** — `rgba(0,0,0,x)` shadows are invisible on `#050505` bg. Use inset glows or layered black shadow technique (case cards).
+- **Nav/footer link colors** — need `a.nav-link` selector + `!important` to override Tailwind cascade.
+- **Shimmer button bg:** `--s-bg:#050505` (NOT `#0A0D0B` — has green tint).
+- **Screenshot tool:** Chrome only. Brave has WebSocket conflicts.
 
 ---
 
@@ -139,25 +142,38 @@ Potential follow-ups:
 
 | File | Description |
 |---|---|
-| `index.html` | Entire site — ~1600 lines. Tailwind CDN + `<style>` + `<script>` |
-| `screenshot.js` | Puppeteer: mobile (423px) + desktop (1440px) full-page + 7 section clips → `screenshots/` |
-| `screenshots/` | All PNG output from screenshot.js |
+| `index.html` | Entire site — Tailwind CDN + styles + all sections + JS. ~1600+ lines. |
+| `screenshot.js` | Puppeteer: mobile (423px) + desktop (1440px) full-page + section clips → `screenshots/` |
+| `screenshots/` | PNG output from screenshot.js |
 | `brand_assets/` | Logo and image assets |
-| `CLAUDE.md` | Project rules, banned words, copy guidelines, architecture notes |
-| `.claude/rules/` | Extended rules: screenshot-workflow.md, design-fidelity.md, puppeteer-screenshots.md, brand-identity.md, technical-defaults.md |
-| `progress.md` | This file — handoff checkpoint |
+| `CLAUDE.md` | Project rules, design tokens, banned words, copy guidelines, architecture |
+| `.claude/rules/screenshot-workflow.md` | Screenshot loop instructions |
+| `.claude/rules/puppeteer-screenshots.md` | Puppeteer internals (revealAll, viewports, path encoding) |
+| `progress.md` | This handoff checkpoint |
+| `C:\Users\admin\.claude\plans\bubbly-brewing-kettle.md` | Original approved copy rewrite plan |
+
+---
+
+## Omar's Links & Credentials
+
+| Item | Value |
+|---|---|
+| Email | `omar@romanalabs.com` |
+| Business site | `https://romanalabs.com` |
+| YouTube | `https://www.youtube.com/@OmarFloresx` |
+| Instagram | `https://instagram.com/omarfloresx` |
+| LinkedIn | `https://linkedin.com/in/omarrflores` (double-r) |
+| Twitter/X | `https://twitter.com/omarflowers_` ("flowers" not "flores") |
+| GitHub | `https://github.com/OmarflorexAI` |
+| Newsletter webhook | `https://hook.us2.make.com/o2dkg4r2t7hs7qnenxbkv8iyrept62ar` |
 
 ---
 
 ## How to Resume
 
-1. Read this file (`progress.md`) in full
-2. Read `CLAUDE.md` for project rules and banned words
-3. Read `index.html` (or relevant section) before making any edits
-4. After every change run `node screenshot.js` and check `screenshots/`
-5. Brand accent: gold `#D4AF37` — never lime, never green
-6. Shimmer buttons: `--s-bg:#050505` (not `#0A0D0B`)
-7. Do NOT add `will-change` to `.reveal` elements
-8. External dark box-shadows are invisible on `#050505` bg — use inset glows or layered black shadow technique
-9. Nav + footer link colors need `!important` to override Tailwind cascade
-10. Logo: only `OF` box turns gold on hover; "Omar Flores" text is always white; subtitle is "AI Systems"
+1. Read this file (`progress.md`) in full.
+2. Read `CLAUDE.md` for project rules and banned words.
+3. **Next task is Cloudflare deployment** — see "What Comes Next" step 1 and 2 above.
+4. Before any code edits: read the relevant section of `index.html` first.
+5. After any code edits: run `node screenshot.js` and verify `screenshots/`.
+6. Maintain personal brand tone — sharing, not pitching.
