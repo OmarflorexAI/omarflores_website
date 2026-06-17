@@ -12,10 +12,12 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous" referrerpolicy="no-referrer">
 
-  <!-- Alpine.js -->
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <!-- Alpine.js (pinned + SRI) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.12/dist/cdn.min.js"
+          integrity="sha384-pb6hrQvo4s23cEUFtj0CZkzGE3jyK3pj26RIupXXxhSrrcUA/Cn0lZgcCrGH0t6L" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -1008,6 +1010,12 @@
     <h3 class="font-serif text-2xl text-white mb-6">Send Me a Message.</h3>
 
     <form id="contact-form" class="space-y-3">
+      <!-- Honeypot: hidden from real users, bots tend to fill it. Not a visible field. -->
+      <div aria-hidden="true" style="position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden;">
+        <label>Company (leave blank)
+          <input id="contact-company" name="company" type="text" tabindex="-1" autocomplete="off">
+        </label>
+      </div>
       <input id="contact-name" type="text" placeholder="Full name" required
              class="w-full bg-surface-h border px-4 py-3 font-mono text-sm text-white focus:border-accent transition-colors"
              style="border-color:rgba(255,255,255,0.12);">
@@ -1628,6 +1636,17 @@
       const email   = document.getElementById('contact-email').value.trim();
       const message = document.getElementById('contact-message').value.trim();
       if (!name || !email || !message) return;
+
+      // Honeypot: a real user never sees or fills this. If it's filled, it's a
+      // bot. Silently show success and do nothing (don't tip off the bot).
+      const trap = document.getElementById('contact-company');
+      if (trap && trap.value) {
+        contactMsg.textContent = "Got it. I'll get back to you soon.";
+        contactMsg.style.color = '#D4AF37';
+        contactMsg.classList.remove('hidden');
+        contactForm.reset();
+        return;
+      }
 
       const btn = contactForm.querySelector('button[type="submit"]');
       btn.disabled = true;

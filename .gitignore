@@ -5,3 +5,13 @@ package.json
 package-lock.json
 *.png
 *.jpg
+
+# Secrets (Cloudflare local dev + env) — never commit
+.env
+.env.*
+.dev.vars
+
+# Internal docs & dev tooling — keep local, do not deploy/publish
+/*.md
+/screenshot.js
+/shot-sections.js
