@@ -629,10 +629,10 @@
     }
     .btn-expand:hover .btn-panel { width: calc(100% - 8px); }
     .btn-expand:active .btn-panel { transform: scale(0.97); }
-    /* Small square variant: panel becomes a compact square (width = its height) */
-    .btn-expand.btn-sq .btn-panel { width: auto; aspect-ratio: 1 / 1; }
-    .btn-expand.btn-sq .btn-label { margin-right: 1.75rem; }
-    .btn-expand.btn-sq:hover .btn-panel { width: calc(100% - 8px); }
+    /* Small square variant: just a smaller resting panel.
+       Keeps the original width transition so the hover expand is unchanged. */
+    .btn-expand.btn-sq .btn-panel { width: 1.75rem; }
+    .btn-expand.btn-sq .btn-label { margin-right: 1.6rem; }
 
     /* ─── Fill button (Email Me / misc) ─────────────────────── */
     .btn-fill {
