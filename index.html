@@ -629,6 +629,10 @@
     }
     .btn-expand:hover .btn-panel { width: calc(100% - 8px); }
     .btn-expand:active .btn-panel { transform: scale(0.97); }
+    /* Small square variant: panel becomes a compact square (width = its height) */
+    .btn-expand.btn-sq .btn-panel { width: auto; aspect-ratio: 1 / 1; }
+    .btn-expand.btn-sq .btn-label { margin-right: 1.75rem; }
+    .btn-expand.btn-sq:hover .btn-panel { width: calc(100% - 8px); }
 
     /* ─── Fill button (Email Me / misc) ─────────────────────── */
     .btn-fill {
@@ -1067,11 +1071,11 @@
           <div class="shimmer-bd"></div>
         </a>
 
-        <!-- Free Resource CTA (solid gold) -->
-        <a href="#" class="btn-expand bg-accent text-dark px-6 py-2.5 font-mono text-[11px] uppercase tracking-widest whitespace-nowrap font-medium" style="border-radius:6px; letter-spacing:0.1em;">
-          <span class="btn-label flex items-center gap-2"><i class="fa-solid fa-gift text-[11px]"></i> Free Resource</span>
+        <!-- Free Resources CTA (solid gold) -->
+        <a href="#" class="btn-expand btn-sq bg-accent text-dark px-6 py-2.5 font-mono text-[11px] uppercase tracking-widest whitespace-nowrap font-medium" style="border-radius:6px; letter-spacing:0.1em;">
+          <span class="btn-label">Free Resources</span>
           <span class="btn-panel" style="background:rgba(0,0,0,0.14);">
-            <i class="fa-solid fa-arrow-right -rotate-45 text-[10px] text-dark"></i>
+            <i class="fa-solid fa-arrow-right -rotate-45 text-[9px] text-dark"></i>
           </span>
         </a>
       </div>
@@ -1455,29 +1459,28 @@
 
       <!-- Left: Text -->
       <div class="lg:w-1/2 space-y-6">
-        <span class="reveal font-mono text-[11px] uppercase tracking-widest block" style="color:#D4AF37;">// Building in Public</span>
+        <span class="reveal font-mono text-[11px] uppercase tracking-widest block" style="color:#D4AF37;">// Let's Talk</span>
         <h2 class="reveal font-serif text-white leading-tight" style="font-size: clamp(36px, 4vw, 52px); transition-delay: 80ms;">
-          Sharing the Process.
+          Your Best Hire<br>Isn't a Person.
         </h2>
-        <p class="reveal text-secondary leading-relaxed" style="font-size: 18px; transition-delay: 160px;">
-          I document what I build as I build it. The AI systems, the experiments, the results, and the failures.
-          No gatekeeping. No fluff. Just the real process.
+        <p class="reveal text-secondary leading-relaxed" style="font-size: 18px; transition-delay: 160ms;">
+          It's a system that runs while you sleep. Tell me what's slowing you down, and I'll show you what to automate first. No pitch. No pressure. Just a clear next step.
         </p>
 
-        <div class="reveal space-y-6 pt-2" style="transition-delay: 240ms;">
-          <div class="border-l-2 pl-5" style="border-color:#D4AF37;">
-            <h4 class="font-serif text-xl text-white mb-1">YouTube</h4>
-            <p class="text-secondary text-sm leading-relaxed">
-              Full walkthroughs of the systems I build. Tutorials, case studies, and behind-the-scenes looks at how it actually works.
-            </p>
-          </div>
-          <div class="border-l-2 pl-5" style="border-color:rgba(255,255,255,0.2);">
-            <h4 class="font-serif text-xl text-white mb-1">Weekly Newsletter</h4>
-            <p class="text-secondary text-sm leading-relaxed">
-              What I'm working on, what's working in AI automation, and one idea worth thinking about. Short. Useful. Honest.
-            </p>
-          </div>
-        </div>
+        <ul class="reveal space-y-4 pt-2" style="transition-delay: 240ms;">
+          <li class="flex items-center gap-3 text-secondary text-sm">
+            <i class="fa-solid fa-check text-[11px]" style="color:#D4AF37;"></i>
+            <span>I reply within 24 hours. Every time.</span>
+          </li>
+          <li class="flex items-center gap-3 text-secondary text-sm">
+            <i class="fa-solid fa-check text-[11px]" style="color:#D4AF37;"></i>
+            <span>First call is a free audit, not a sales pitch.</span>
+          </li>
+          <li class="flex items-center gap-3 text-secondary text-sm">
+            <i class="fa-solid fa-check text-[11px]" style="color:#D4AF37;"></i>
+            <span>Built for your stack. Never a template.</span>
+          </li>
+        </ul>
       </div>
 
       <!-- Right: Get In Touch card (centered, opens contact modal) -->
@@ -1489,10 +1492,10 @@
             Have a project, a question, or an idea worth automating? Send me a message and I'll get back to you.
           </p>
           <button type="button" @click="contactOpen = true"
-                  class="btn-expand bg-accent text-dark px-6 py-3 font-mono text-sm uppercase tracking-widest whitespace-nowrap font-medium inline-flex">
+                  class="btn-expand btn-sq bg-accent text-dark px-6 py-3 font-mono text-sm uppercase tracking-widest whitespace-nowrap font-medium inline-flex">
             <span class="btn-label">Get In Touch</span>
             <span class="btn-panel" style="background:rgba(0,0,0,0.14);">
-              <i class="fa-solid fa-arrow-right -rotate-45 text-[10px] text-dark"></i>
+              <i class="fa-solid fa-arrow-right -rotate-45 text-[9px] text-dark"></i>
             </span>
           </button>
         </div>
