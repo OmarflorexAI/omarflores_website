@@ -719,7 +719,7 @@
       font-size: 0.65rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #6B7280 !important;
+      color: #B4BAC2 !important;
       transition: color 0.2s;
       text-decoration: none;
     }
@@ -902,7 +902,7 @@
 </head>
 
 <body class="relative flex flex-col min-h-screen"
-      x-data="{ open: false, scrolled: false }"
+      x-data="{ open: false, scrolled: false, contactOpen: false }"
       @scroll.window="scrolled = (window.scrollY > 24)">
 
 <!-- Scroll progress bar -->
@@ -930,13 +930,13 @@
 
       <!-- Desktop Nav -->
       <nav class="hidden md:flex items-center gap-8">
-        <a href="#work"  class="nav-link">Work</a>
+        <a href="#work"  class="nav-link">Systems</a>
         <a href="#about" class="nav-link">About</a>
         <a href="https://romanalabs.com" target="_blank"
            class="shimmer-btn font-mono text-[11px] uppercase tracking-widest text-white px-5 py-2"
            style="--s-bg:#050505; --s-color:#D4AF37; --s-speed:4s; --s-cut:1px; border:1px solid rgba(212,175,55,0.3); border-radius:6px; letter-spacing:0.1em;">
           <div class="shimmer-spark-wrap"><div class="shimmer-spark"><div class="shimmer-conic"></div></div></div>
-          <span class="shimmer-content">Get in Touch</span>
+          <span class="shimmer-content">Work With Me</span>
           <div class="shimmer-hl"></div>
           <div class="shimmer-bd"></div>
         </a>
@@ -961,10 +961,10 @@
      x-transition:leave-end="opacity-0 -translate-y-4"
      class="fixed inset-0 z-40 bg-dark pt-24 px-6 md:hidden flex flex-col">
   <nav class="flex flex-col gap-6">
-    <a href="#work"     @click="open=false" class="font-serif text-3xl text-white border-b border-white/7 pb-5 hover:text-accent transition-colors" style="border-color:rgba(255,255,255,0.07);">Work</a>
+    <a href="#work"     @click="open=false" class="font-serif text-3xl text-white border-b border-white/7 pb-5 hover:text-accent transition-colors" style="border-color:rgba(255,255,255,0.07);">Systems</a>
     <a href="#services" @click="open=false" class="font-serif text-3xl text-white border-b border-white/7 pb-5 hover:text-accent transition-colors" style="border-color:rgba(255,255,255,0.07);">Services</a>
     <a href="#about"    @click="open=false" class="font-serif text-3xl text-white border-b border-white/7 pb-5 hover:text-accent transition-colors" style="border-color:rgba(255,255,255,0.07);">About</a>
-    <a href="#contact"  @click="open=false" class="font-serif text-3xl text-accent">Contact</a>
+    <a href="#community" @click="open=false; contactOpen=true" class="font-serif text-3xl text-accent">Contact</a>
   </nav>
   <div class="mt-auto pb-12">
     <div class="flex items-center gap-2">
@@ -976,14 +976,68 @@
 
 
 <!-- ═══════════════════════════════════════════
+     CONTACT MODAL (popup form)
+══════════════════════════════════════════════ -->
+<div x-show="contactOpen" x-cloak
+     class="fixed inset-0 z-[60] flex items-center justify-center px-5"
+     @keydown.escape.window="contactOpen = false">
+
+  <!-- Backdrop -->
+  <div x-show="contactOpen" x-transition.opacity.duration.250ms
+       @click="contactOpen = false"
+       class="absolute inset-0" style="background:rgba(0,0,0,0.72); backdrop-filter:blur(4px);"></div>
+
+  <!-- Card -->
+  <div x-show="contactOpen"
+       x-transition:enter="transition ease-out duration-300"
+       x-transition:enter-start="opacity-0 translate-y-6 scale-95"
+       x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+       x-transition:leave="transition ease-in duration-200"
+       x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+       x-transition:leave-end="opacity-0 translate-y-6 scale-95"
+       class="relative w-full max-w-md border p-8 md:p-10"
+       style="border-color:rgba(255,255,255,0.14); background:#0d0d0d; border-top:2px solid #D4AF37; box-shadow:0 30px 80px rgba(0,0,0,0.6);">
+
+    <!-- Close -->
+    <button type="button" @click="contactOpen = false"
+            class="absolute top-5 right-5 text-secondary hover:text-white transition-colors" aria-label="Close">
+      <i class="fa-solid fa-xmark text-lg"></i>
+    </button>
+
+    <span class="font-mono text-[10px] uppercase tracking-widest mb-5 block" style="color:#D4AF37;">// Get In Touch</span>
+    <h3 class="font-serif text-2xl text-white mb-6">Send Me a Message.</h3>
+
+    <form id="contact-form" class="space-y-3">
+      <input id="contact-name" type="text" placeholder="Full name" required
+             class="w-full bg-surface-h border px-4 py-3 font-mono text-sm text-white focus:border-accent transition-colors"
+             style="border-color:rgba(255,255,255,0.12);">
+      <input id="contact-email" type="email" placeholder="your@email.com" required
+             class="w-full bg-surface-h border px-4 py-3 font-mono text-sm text-white focus:border-accent transition-colors"
+             style="border-color:rgba(255,255,255,0.12);">
+      <textarea id="contact-message" rows="4" placeholder="Your message" required
+                class="w-full bg-surface-h border px-4 py-3 font-mono text-sm text-white focus:border-accent transition-colors resize-none"
+                style="border-color:rgba(255,255,255,0.12);"></textarea>
+      <button type="submit" class="btn-expand bg-accent text-dark w-full px-6 py-3 font-mono text-sm uppercase tracking-widest font-medium justify-center">
+        <span class="btn-label">Send Message</span>
+        <span class="btn-panel" style="background:rgba(0,0,0,0.14);">
+          <i class="fa-solid fa-arrow-right -rotate-45 text-[10px] text-dark"></i>
+        </span>
+      </button>
+    </form>
+    <p id="contact-msg" class="font-mono text-[11px] mt-4 tracking-wide hidden"></p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
      HERO
 ══════════════════════════════════════════════ -->
 <section id="hero" class="grid-bg min-h-screen pt-28 pb-16 px-5 sm:px-8 lg:px-14 flex flex-col justify-center overflow-hidden">
 
-  <!-- BGPattern: outer shell has mask; inner div drifts via GPU transform -->
-  <div class="bg-pattern bg-mask-fade-edges">
-    <div class="bg-pattern-inner bg-pattern-grid bg-pattern-animate"></div>
-  </div>
+  <!-- Smoke background: WebGL2 shader (ported from spooky-smoke-animation.tsx) -->
+  <canvas id="smoke-canvas" class="absolute inset-0 w-full h-full block" aria-hidden="true"></canvas>
+  <!-- Dark overlay keeps hero copy readable over the smoke -->
+  <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to right, rgba(5,5,5,0.92) 0%, rgba(5,5,5,0.7) 45%, rgba(5,5,5,0.45) 100%);"></div>
 
   <div class="max-w-7xl w-full mx-auto relative z-10">
     <div id="hero-content" class="max-w-4xl space-y-6">
@@ -1011,6 +1065,14 @@
           <span class="shimmer-content flex items-center gap-2"><i class="fa-brands fa-youtube text-[12px]"></i> Watch on YouTube</span>
           <div class="shimmer-hl"></div>
           <div class="shimmer-bd"></div>
+        </a>
+
+        <!-- Free Resource CTA (solid gold) -->
+        <a href="#" class="btn-expand bg-accent text-dark px-6 py-2.5 font-mono text-[11px] uppercase tracking-widest whitespace-nowrap font-medium" style="border-radius:6px; letter-spacing:0.1em;">
+          <span class="btn-label flex items-center gap-2"><i class="fa-solid fa-gift text-[11px]"></i> Free Resource</span>
+          <span class="btn-panel" style="background:rgba(0,0,0,0.14);">
+            <i class="fa-solid fa-arrow-right -rotate-45 text-[10px] text-dark"></i>
+          </span>
         </a>
       </div>
     </div>
@@ -1102,16 +1164,23 @@
       <span class="italic text-secondary">Most people are sleeping on it."</span>
     </p>
 
+    <!-- Portrait: square frame, rounded edges -->
+    <div class="reveal flex justify-center mb-10" style="transition-delay: 120ms;">
+      <img src="brand_assets/5RsAsDt5_400x400.jpg" alt="Omar Flores"
+           class="w-40 h-40 sm:w-44 sm:h-44 object-cover rounded-2xl"
+           style="border:1px solid rgba(212,175,55,0.35); box-shadow:0 10px 40px rgba(0,0,0,0.5);">
+    </div>
+
     <div class="reveal text-secondary font-light leading-relaxed space-y-5 text-left sm:text-center max-w-2xl mx-auto"
          style="font-size: 18px; transition-delay: 160ms;">
       <p>
-        I'm Omar Flores. I help people master AI agents, build automations, and use AI to improve their lives. But what actually drives me is bigger than that: we're living through the most powerful shift in how business gets done, and most people are still waiting for permission to use it.
+        I'm Omar Flores. I help people master AI agents, build automations, and use AI to improve their lives. What drives me is bigger: we're living through the most powerful shift in how business gets done, and most people are waiting for permission to use it.
       </p>
       <p>
-        A small business can now punch like an enterprise. A solo operator can now do the work of a team. AI removes the unfair advantage that used to belong only to companies with big budgets and big headcount.
+        A small business can now punch like an enterprise. A solo operator can do the work of a team. AI removes the unfair advantage that used to belong only to companies with big budgets and headcount.
       </p>
       <p>
-        The businesses that figure this out now will have a head start that's almost impossible to close. The ones that wait will spend the next five years trying to catch up.
+        The businesses that figure this out now get a head start that's almost impossible to close. The ones that wait spend the next five years catching up.
         <strong class="text-white font-medium">Your competitors aren't waiting. Neither should you.</strong>
       </p>
     </div>
@@ -1411,53 +1480,25 @@
         </div>
       </div>
 
-      <!-- Right: Newsletter signup card -->
+      <!-- Right: Get In Touch card (centered, opens contact modal) -->
       <div class="lg:w-1/2 relative reveal-right" style="transition-delay: 200ms;">
-        <div class="relative border p-8 md:p-10 overflow-hidden" style="border-color:rgba(255,255,255,0.1); background:#050505; border-top:2px solid rgba(255,255,255,0.18);">
-          <span class="font-mono text-[10px] uppercase tracking-widest mb-6 block" style="color:#D4AF37;">// Newsletter</span>
-          <h3 class="font-serif text-2xl text-white mb-3">Tap Into My Brain.</h3>
-          <p class="text-secondary text-sm leading-relaxed mb-8">
-            You're one email sign-up away from tapping into my brain. I share everything I learn about AI and building real systems, through writing and on YouTube. No gatekeeping. No fluff.
+        <div class="relative border p-8 md:p-12 overflow-hidden text-center" style="border-color:rgba(255,255,255,0.12); background:#0b0b0b; border-top:2px solid #D4AF37;">
+          <span class="font-mono text-[10px] uppercase tracking-widest mb-6 block" style="color:#D4AF37;">// Get In Touch</span>
+          <h3 class="font-serif text-2xl text-white mb-3">Let's Build Something.</h3>
+          <p class="text-secondary text-sm leading-relaxed mb-8 max-w-sm mx-auto">
+            Have a project, a question, or an idea worth automating? Send me a message and I'll get back to you.
           </p>
-          <form id="newsletter-form" class="flex flex-col sm:flex-row gap-3">
-            <input
-              id="newsletter-email"
-              type="email"
-              placeholder="your@email.com"
-              required
-              class="flex-1 bg-surface-h border px-4 py-3 font-mono text-sm text-white focus:border-accent transition-colors"
-              style="border-color:rgba(255,255,255,0.1);"
-            >
-            <button type="submit" class="btn-expand bg-accent text-dark px-6 py-3 font-mono text-sm uppercase tracking-widest whitespace-nowrap font-medium">
-              <span class="btn-label">Subscribe</span>
-              <span class="btn-panel" style="background:rgba(0,0,0,0.14);">
-                <i class="fa-solid fa-arrow-right -rotate-45 text-[10px] text-dark"></i>
-              </span>
-            </button>
-          </form>
-          <p id="newsletter-msg" class="font-mono text-[11px] mt-4 tracking-wide hidden"></p>
-          <p class="font-mono text-[11px] text-secondary/60 mt-4 tracking-wide">Weekly. No spam. Unsubscribe anytime.</p>
+          <button type="button" @click="contactOpen = true"
+                  class="btn-expand bg-accent text-dark px-6 py-3 font-mono text-sm uppercase tracking-widest whitespace-nowrap font-medium inline-flex">
+            <span class="btn-label">Get In Touch</span>
+            <span class="btn-panel" style="background:rgba(0,0,0,0.14);">
+              <i class="fa-solid fa-arrow-right -rotate-45 text-[10px] text-dark"></i>
+            </span>
+          </button>
         </div>
       </div>
 
     </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════
-     CONTACT CTA
-══════════════════════════════════════════════ -->
-<section id="contact" class="grid-bg py-24 px-5 sm:px-8 lg:px-14 bg-white text-dark overflow-hidden">
-  <!-- BGPattern: dots + fade-edges (dark on white) -->
-  <div class="bg-pattern bg-mask-fade-edges bg-dots-drift" style="background-image: radial-gradient(rgba(0,0,0,0.22) 1px, transparent 1px); background-size: 24px 24px;"></div>
-
-  <div class="max-w-5xl mx-auto text-center relative z-10">
-    <h2 class="reveal font-serif leading-[0.9] tracking-tight mb-8"
-        style="font-size: clamp(44px, 7vw, 88px); transition-delay: 80ms;">
-      Doing cool things with AI.<br>
-      <span class="italic" style="color: #D4AF37;">To change the world (for the better).</span>
-    </h2>
   </div>
 </section>
 
@@ -1594,36 +1635,148 @@
     });
   });
 
-  // ─── Newsletter Webhook ──────────────────────
-  const newsletterForm = document.getElementById('newsletter-form');
-  const newsletterMsg  = document.getElementById('newsletter-msg');
-  if (newsletterForm) {
-    newsletterForm.addEventListener('submit', async (e) => {
+  // ─── Contact Form Webhook ────────────────────
+  const contactForm = document.getElementById('contact-form');
+  const contactMsg  = document.getElementById('contact-msg');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = document.getElementById('newsletter-email').value.trim();
-      if (!email) return;
+      const name    = document.getElementById('contact-name').value.trim();
+      const email   = document.getElementById('contact-email').value.trim();
+      const message = document.getElementById('contact-message').value.trim();
+      if (!name || !email || !message) return;
 
-      const btn = newsletterForm.querySelector('button[type="submit"]');
+      const btn = contactForm.querySelector('button[type="submit"]');
       btn.disabled = true;
 
       try {
         await fetch('https://hook.us2.make.com/o2dkg4r2t7hs7qnenxbkv8iyrept62ar', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, source: 'omar-flores-website', timestamp: new Date().toISOString() }),
+          body: JSON.stringify({ name, email, message, source: 'omar-flores-website', timestamp: new Date().toISOString() }),
         });
-        newsletterMsg.textContent = "You're in. First issue hits your inbox this week.";
-        newsletterMsg.style.color = '#D4AF37';
-        newsletterMsg.classList.remove('hidden');
-        newsletterForm.reset();
+        contactMsg.textContent = "Got it. I'll get back to you soon.";
+        contactMsg.style.color = '#D4AF37';
+        contactMsg.classList.remove('hidden');
+        contactForm.reset();
       } catch {
-        newsletterMsg.textContent = 'Something went wrong. Try again in a moment.';
-        newsletterMsg.style.color = '#ef4444';
-        newsletterMsg.classList.remove('hidden');
+        contactMsg.textContent = 'Something went wrong. Try again in a moment.';
+        contactMsg.style.color = '#ef4444';
+        contactMsg.classList.remove('hidden');
+      } finally {
         btn.disabled = false;
       }
     });
   }
+
+  // ─── Hero smoke background (WebGL2) ──────────────
+  // Vanilla port of spooky-smoke-animation.tsx. Same fragment shader,
+  // tinted with the brand gold and sized to the hero, not the window.
+  (function initSmoke() {
+    const canvas = document.getElementById('smoke-canvas');
+    if (!canvas) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const gl = canvas.getContext('webgl2');
+    if (!gl || prefersReduced) {
+      // Graceful fallback: soft gold radial glow, no animation
+      canvas.style.background =
+        'radial-gradient(80% 120% at 75% 30%, rgba(212,175,55,0.10), transparent 60%), #050505';
+      return;
+    }
+
+    const vertexSrc = `#version 300 es
+precision highp float;
+in vec4 position;
+void main(){gl_Position=position;}`;
+
+    const fragmentSrc = `#version 300 es
+precision highp float;
+out vec4 O;
+uniform float time;
+uniform vec2 resolution;
+uniform vec3 u_color;
+#define FC gl_FragCoord.xy
+#define R resolution
+#define T (time+660.)
+float rnd(vec2 p){p=fract(p*vec2(12.9898,78.233));p+=dot(p,p+34.56);return fract(p.x*p.y);}
+float noise(vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);return mix(mix(rnd(i),rnd(i+vec2(1,0)),u.x),mix(rnd(i+vec2(0,1)),rnd(i+1.),u.x),u.y);}
+float fbm(vec2 p){float t=.0,a=1.;for(int i=0;i<5;i++){t+=a*noise(p);p*=mat2(1,-1.2,.2,1.2)*2.;a*=.5;}return t;}
+void main(){
+  vec2 uv=(FC-.5*R)/R.y;
+  vec3 col=vec3(1);
+  uv.x+=.25;
+  uv*=vec2(2,1);
+  float n=fbm(uv*.28-vec2(T*.01,0));
+  n=noise(uv*3.+n*2.);
+  col.r-=fbm(uv+vec2(0,T*.015)+n);
+  col.g-=fbm(uv*1.003+vec2(0,T*.015)+n+.003);
+  col.b-=fbm(uv*1.006+vec2(0,T*.015)+n+.006);
+  col=mix(col, u_color, dot(col,vec3(.21,.71,.07)));
+  col=mix(vec3(.08),col,min(time*.1,1.));
+  col=clamp(col,.08,1.);
+  // Dither to break up color banding (the "glitchy" contour rings),
+  // strongest in the dark gold regions. ~1.5/255 of screen-space noise.
+  col+=(rnd(FC+fract(T))-.5)/170.;
+  O=vec4(col,1);
+}`;
+
+    function compile(type, src) {
+      const sh = gl.createShader(type);
+      gl.shaderSource(sh, src);
+      gl.compileShader(sh);
+      if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+        console.error('Smoke shader error:', gl.getShaderInfoLog(sh));
+      }
+      return sh;
+    }
+
+    const program = gl.createProgram();
+    gl.attachShader(program, compile(gl.VERTEX_SHADER, vertexSrc));
+    gl.attachShader(program, compile(gl.FRAGMENT_SHADER, fragmentSrc));
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      console.error('Smoke program error:', gl.getProgramInfoLog(program));
+      return;
+    }
+
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, 1, -1, -1, 1, 1, 1, -1]), gl.STATIC_DRAW);
+    const position = gl.getAttribLocation(program, 'position');
+    gl.enableVertexAttribArray(position);
+    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+
+    const uResolution = gl.getUniformLocation(program, 'resolution');
+    const uTime       = gl.getUniformLocation(program, 'time');
+    const uColor      = gl.getUniformLocation(program, 'u_color');
+
+    // Brand gold #D4AF37 → normalized RGB
+    const smokeColor = [0xD4 / 255, 0xAF / 255, 0x37 / 255];
+
+    function resize() {
+      const dpr = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function render(now) {
+      gl.clearColor(0, 0, 0, 1);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.useProgram(program);
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.uniform2f(uResolution, canvas.width, canvas.height);
+      gl.uniform1f(uTime, now * 1e-3);
+      gl.uniform3fv(uColor, smokeColor);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
+  })();
 
 </script>
 
