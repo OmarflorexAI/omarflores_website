@@ -90,31 +90,6 @@
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.12/dist/cdn.min.js"
           integrity="sha384-pb6hrQvo4s23cEUFtj0CZkzGE3jyK3pj26RIupXXxhSrrcUA/Cn0lZgcCrGH0t6L" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            dark:       '#050505',
-            accent:     '#D4AF37',
-            surface:    '#0f0f0f',
-            'surface-h':'#161616',
-            secondary:  '#B0B7C3',
-          },
-          fontFamily: {
-            serif: ['Instrument Serif', 'Georgia', 'serif'],
-            sans:  ['DM Sans', 'sans-serif'],
-            mono:  ['JetBrains Mono', 'monospace'],
-          },
-          borderColor: {
-            DEFAULT: 'rgba(255,255,255,0.07)',
-          },
-        }
-      }
-    }
-  </script>
 
   <style>
     /* ─── Brand color spectrum (rainbow border) ─────────────── */
@@ -124,6 +99,8 @@
       --color-3: 50 60% 70%;   /* champagne     */
       --color-4: 43 72% 42%;   /* deep gold    */
       --color-5: 33 85% 55%;   /* orange-gold  */
+      --accent: #D4AF37;                 /* brand gold */
+      --hairline: rgba(255,255,255,0.07);/* hairline border */
     }
 
     /* ─── Base ─────────────────────────────────────────────── */
@@ -141,12 +118,12 @@
     }
 
     /* ─── Text selection ────────────────────────────────────── */
-    ::selection      { background: #D4AF37; color: #050505; }
-    ::-moz-selection { background: #D4AF37; color: #050505; }
+    ::selection      { background: var(--accent); color: #050505; }
+    ::-moz-selection { background: var(--accent); color: #050505; }
 
     /* ─── Custom border color ──────────────────────────────── */
-    .border-dim   { border-color: rgba(255,255,255,0.07); }
-    .bg-border-dim{ background-color: rgba(255,255,255,0.07); }
+    .border-dim   { border-color: var(--hairline); }
+    .bg-border-dim{ background-color: var(--hairline); }
 
     /* ─── BGPattern (ported from shadcn component) ─────────── */
     /* Outer shell: mask + clip. Sits behind content. */
@@ -230,7 +207,7 @@
       top: 0; left: 0;
       height: 2px;
       width: 0%;
-      background: #D4AF37;
+      background: var(--accent);
       z-index: 9999;
       transition: width 0.1s linear;
       box-shadow: 0 0 8px rgba(212,175,55,0.5);
@@ -262,7 +239,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(255,255,255,0.07);
+      background: var(--hairline);
       transform: translateY(101%);
       transition: transform 0.42s cubic-bezier(.16,1,.3,1);
       z-index: 0;
@@ -796,7 +773,7 @@
       padding: 4px 12px;
       transition: border-color 0.2s, color 0.2s;
     }
-    .tech-pill:hover { border-color: #D4AF37; color: #D4AF37; }
+    .tech-pill:hover { border-color: var(--accent); color: var(--accent); }
 
     /* ─── Nav link underline ────────────────────────────────── */
     a.nav-link {
@@ -837,8 +814,8 @@
       display: grid;
       grid-template-columns: repeat(1, 1fr);
       gap: 1px;
-      background-color: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.07);
+      background-color: var(--hairline);
+      border: 1px solid var(--hairline);
     }
     @media (min-width: 768px)  { .service-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (min-width: 1024px) { .service-grid { grid-template-columns: repeat(4, 1fr); } }
@@ -861,7 +838,7 @@
     /* ─── Case study cards ──────────────────────────────────── */
     .case-card {
       background: #0f0f0f;
-      border: 1px solid rgba(255,255,255,0.07);
+      border: 1px solid var(--hairline);
       display: flex;
       flex-direction: column;
       height: 100%;
@@ -985,6 +962,10 @@
       .ticker-item { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
     }
   </style>
+
+  <!-- Tailwind CSS (compiled static build) loaded AFTER inline <style> to match
+       the Play CDN's runtime injection order, preserving the exact cascade. -->
+  <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body class="relative flex flex-col min-h-screen"
@@ -1020,7 +1001,7 @@
         <a href="#about" class="nav-link">About</a>
         <a href="https://romanalabs.com" target="_blank"
            class="shimmer-btn font-mono text-[11px] uppercase tracking-widest text-white px-5 py-2"
-           style="--s-bg:#050505; --s-color:#D4AF37; --s-speed:4s; --s-cut:1px; border:1px solid rgba(212,175,55,0.3); border-radius:6px; letter-spacing:0.1em;">
+           style="--s-bg:#050505; --s-color:var(--accent); --s-speed:4s; --s-cut:1px; border:1px solid rgba(212,175,55,0.3); border-radius:6px; letter-spacing:0.1em;">
           <div class="shimmer-spark-wrap"><div class="shimmer-spark"><div class="shimmer-conic"></div></div></div>
           <span class="shimmer-content">Work With Me</span>
           <div class="shimmer-hl"></div>
@@ -1047,9 +1028,9 @@
      x-transition:leave-end="opacity-0 -translate-y-4"
      class="fixed inset-0 z-40 bg-dark pt-24 px-6 md:hidden flex flex-col">
   <nav class="flex flex-col gap-6">
-    <a href="#work"     @click="open=false" class="font-serif text-3xl text-white border-b border-white/7 pb-5 hover:text-accent transition-colors" style="border-color:rgba(255,255,255,0.07);">Systems</a>
-    <a href="#services" @click="open=false" class="font-serif text-3xl text-white border-b border-white/7 pb-5 hover:text-accent transition-colors" style="border-color:rgba(255,255,255,0.07);">Services</a>
-    <a href="#about"    @click="open=false" class="font-serif text-3xl text-white border-b border-white/7 pb-5 hover:text-accent transition-colors" style="border-color:rgba(255,255,255,0.07);">About</a>
+    <a href="#work"     @click="open=false" class="font-serif text-3xl text-white border-b border-white/7 pb-5 hover:text-accent transition-colors" style="border-color:var(--hairline);">Systems</a>
+    <a href="#services" @click="open=false" class="font-serif text-3xl text-white border-b border-white/7 pb-5 hover:text-accent transition-colors" style="border-color:var(--hairline);">Services</a>
+    <a href="#about"    @click="open=false" class="font-serif text-3xl text-white border-b border-white/7 pb-5 hover:text-accent transition-colors" style="border-color:var(--hairline);">About</a>
     <a href="#community" @click="open=false; contactOpen=true" class="font-serif text-3xl text-accent">Contact</a>
   </nav>
   <div class="mt-auto pb-12">
@@ -1082,7 +1063,7 @@
        x-transition:leave-start="opacity-100 translate-y-0 scale-100"
        x-transition:leave-end="opacity-0 translate-y-6 scale-95"
        class="relative w-full max-w-md border p-8 md:p-10"
-       style="border-color:rgba(255,255,255,0.14); background:#0d0d0d; border-top:2px solid #D4AF37; box-shadow:0 30px 80px rgba(0,0,0,0.6);">
+       style="border-color:rgba(255,255,255,0.14); background:#0d0d0d; border-top:2px solid var(--accent); box-shadow:0 30px 80px rgba(0,0,0,0.6);">
 
     <!-- Close -->
     <button type="button" @click="contactOpen = false"
@@ -1090,7 +1071,7 @@
       <i class="fa-solid fa-xmark text-lg"></i>
     </button>
 
-    <span class="font-mono text-[10px] uppercase tracking-widest mb-5 block" style="color:#D4AF37;">// Get In Touch</span>
+    <span class="font-mono text-[10px] uppercase tracking-widest mb-5 block" style="color:var(--accent);">// Get In Touch</span>
     <h3 class="font-serif text-2xl text-white mb-6">Send Me a Message.</h3>
 
     <form id="contact-form" class="space-y-3">
@@ -1138,21 +1119,21 @@
       <h1 class="reveal font-serif leading-[0.88] tracking-tight text-white"
           style="font-size: clamp(52px, 10vw, 128px); font-weight: 400;">
         Building<br>
-        <span class="italic" style="color:#D4AF37;">Intelligent</span><br>
+        <span class="italic" style="color:var(--accent);">Intelligent</span><br>
         Systems.
       </h1>
 
       <!-- Subtext -->
       <p class="reveal text-secondary font-light leading-relaxed max-w-xl"
          style="font-size: clamp(16px, 1.4vw, 19px); transition-delay: 80ms;">
-        I build the <span class="text-white border-b" style="border-color:#D4AF37; padding-bottom:1px;">AI backbone</span> that drives real results. A furniture store made $200K. A local business hit #1 on Google in six months. Done for you, built to last, without the tech headache.
+        I build the <span class="text-white border-b" style="border-color:var(--accent); padding-bottom:1px;">AI backbone</span> that drives real results. A furniture store made $200K. A local business hit #1 on Google in six months. Done for you, built to last, without the tech headache.
       </p>
 
       <!-- CTAs -->
       <div class="reveal flex flex-wrap gap-3 pt-1" style="transition-delay: 160ms;">
         <a href="https://www.youtube.com/@OmarFloresx" target="_blank"
            class="shimmer-btn font-mono text-[11px] uppercase tracking-widest text-white px-5 py-2.5"
-           style="--s-bg:#050505; --s-color:#D4AF37; --s-speed:4s; --s-cut:1px; border:1px solid rgba(212,175,55,0.3); border-radius:6px; letter-spacing:0.1em;">
+           style="--s-bg:#050505; --s-color:var(--accent); --s-speed:4s; --s-cut:1px; border:1px solid rgba(212,175,55,0.3); border-radius:6px; letter-spacing:0.1em;">
           <div class="shimmer-spark-wrap"><div class="shimmer-spark"><div class="shimmer-conic"></div></div></div>
           <span class="shimmer-content flex items-center gap-2"><i class="fa-brands fa-youtube text-[12px]"></i> Watch on YouTube</span>
           <div class="shimmer-hl"></div>
@@ -1175,32 +1156,32 @@
 <!-- ═══════════════════════════════════════════
      STATS TICKER (MARQUEE)
 ══════════════════════════════════════════════ -->
-<div class="border-y overflow-hidden py-5 relative" style="border-color:rgba(255,255,255,0.07); background:#0f0f0f;">
+<div class="border-y overflow-hidden py-5 relative" style="border-color:var(--hairline); background:#0f0f0f;">
   <div class="marquee-track select-none">
     <!-- Set 1 -->
     <div class="flex items-center shrink-0" style="gap: 0;">
       <div class="ticker-item flex items-center gap-4 px-10">
-        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">3+</span>
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:var(--accent);">3+</span>
         <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Years<br>Experience</span>
       </div>
       <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
       <div class="ticker-item flex items-center gap-4 px-10">
-        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">50+</span>
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:var(--accent);">50+</span>
         <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Systems<br>Deployed</span>
       </div>
       <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
       <div class="ticker-item flex items-center gap-4 px-10">
-        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">500+</span>
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:var(--accent);">500+</span>
         <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Workflows<br>For Clients</span>
       </div>
       <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
       <div class="ticker-item flex items-center gap-4 px-10">
-        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">20+</span>
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:var(--accent);">20+</span>
         <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Clients<br>Served</span>
       </div>
       <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
       <div class="ticker-item flex items-center gap-4 px-10">
-        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">$200k+</span>
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:var(--accent);">$200k+</span>
         <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Generated for<br>One Client</span>
       </div>
       <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
@@ -1208,27 +1189,27 @@
     <!-- Set 2 (duplicate for seamless loop) -->
     <div class="flex items-center shrink-0" style="gap: 0;">
       <div class="ticker-item flex items-center gap-4 px-10">
-        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">3+</span>
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:var(--accent);">3+</span>
         <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Years<br>Experience</span>
       </div>
       <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
       <div class="ticker-item flex items-center gap-4 px-10">
-        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">50+</span>
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:var(--accent);">50+</span>
         <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Systems<br>Deployed</span>
       </div>
       <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
       <div class="ticker-item flex items-center gap-4 px-10">
-        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">500+</span>
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:var(--accent);">500+</span>
         <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Workflows<br>For Clients</span>
       </div>
       <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
       <div class="ticker-item flex items-center gap-4 px-10">
-        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">20+</span>
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:var(--accent);">20+</span>
         <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Clients<br>Served</span>
       </div>
       <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
       <div class="ticker-item flex items-center gap-4 px-10">
-        <span class="font-serif text-[2.25rem] italic leading-none" style="color:#D4AF37;">$200k+</span>
+        <span class="font-serif text-[2.25rem] italic leading-none" style="color:var(--accent);">$200k+</span>
         <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Generated for<br>One Client</span>
       </div>
       <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
@@ -1248,7 +1229,7 @@
 
   <div class="max-w-4xl mx-auto text-center relative z-10">
 
-    <span class="reveal font-mono text-[11px] uppercase tracking-widest mb-6 block" style="color:#D4AF37;">// The Bigger Picture</span>
+    <span class="reveal font-mono text-[11px] uppercase tracking-widest mb-6 block" style="color:var(--accent);">// The Bigger Picture</span>
 
     <p class="reveal font-serif leading-[1.1] text-white mb-12"
        style="font-size: clamp(30px, 4.8vw, 56px); transition-delay: 80ms;">
@@ -1295,11 +1276,11 @@
 <!-- ═══════════════════════════════════════════
      SERVICES
 ══════════════════════════════════════════════ -->
-<section id="services" class="py-16 px-5 sm:px-8 lg:px-14 border-y" style="border-color:rgba(255,255,255,0.07);">
+<section id="services" class="py-16 px-5 sm:px-8 lg:px-14 border-y" style="border-color:var(--hairline);">
   <div class="max-w-7xl mx-auto">
 
     <!-- Header -->
-    <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 border-b pb-10" style="border-color:rgba(255,255,255,0.07);">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 border-b pb-10" style="border-color:var(--hairline);">
       <div>
         <span class="reveal font-mono text-[11px] text-accent uppercase tracking-widest mb-3 block">// What I Build</span>
         <h2 class="reveal font-serif text-white" style="font-size: clamp(42px, 5vw, 64px); transition-delay: 80ms;">
@@ -1386,11 +1367,11 @@
 <!-- ═══════════════════════════════════════════
      PROJECTS / CASE STUDIES
 ══════════════════════════════════════════════ -->
-<section id="work" class="py-16 px-5 sm:px-8 lg:px-14 border-t" style="border-color:rgba(255,255,255,0.07);">
+<section id="work" class="py-16 px-5 sm:px-8 lg:px-14 border-t" style="border-color:var(--hairline);">
   <div class="max-w-7xl mx-auto">
 
     <!-- Header -->
-    <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 border-b pb-10" style="border-color:rgba(255,255,255,0.07);">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 border-b pb-10" style="border-color:var(--hairline);">
       <div>
         <span class="reveal font-mono text-[11px] text-accent uppercase tracking-widest mb-3 block">// Results</span>
         <h2 class="reveal font-serif text-white" style="font-size: clamp(42px, 5vw, 64px); transition-delay: 80ms;">
@@ -1537,7 +1518,7 @@
 <!-- ═══════════════════════════════════════════
      COMMUNITY
 ══════════════════════════════════════════════ -->
-<section id="community" class="grid-bg py-16 px-5 sm:px-8 lg:px-14 border-t overflow-hidden" style="border-color:rgba(255,255,255,0.07); background:#0f0f0f;">
+<section id="community" class="grid-bg py-16 px-5 sm:px-8 lg:px-14 border-t overflow-hidden" style="border-color:var(--hairline); background:#0f0f0f;">
   <!-- BGPattern: dots + fade-edges -->
   <div class="bg-pattern bg-pattern-dots bg-mask-fade-edges" style="opacity: 0.5;"></div>
 
@@ -1558,7 +1539,7 @@
 
       <!-- Right: Get In Touch card (opens contact modal) -->
       <div class="w-full lg:w-[440px] shrink-0 relative reveal-right" style="transition-delay: 200ms;">
-        <div class="relative border p-8 md:p-10 overflow-hidden text-center" style="border-color:rgba(255,255,255,0.12); background:#0b0b0b; border-top:2px solid #D4AF37;">
+        <div class="relative border p-8 md:p-10 overflow-hidden text-center" style="border-color:rgba(255,255,255,0.12); background:#0b0b0b; border-top:2px solid var(--accent);">
           <h3 class="font-serif text-2xl text-white mb-3">Let's Build Something.</h3>
           <p class="text-secondary text-sm leading-relaxed mb-8 max-w-sm mx-auto">
             Have a project, a question, or an idea worth automating? Send me a message and I'll get back to you.
@@ -1581,7 +1562,7 @@
 <!-- ═══════════════════════════════════════════
      FOOTER
 ══════════════════════════════════════════════ -->
-<footer class="bg-dark pt-12 pb-8 px-5 sm:px-8 lg:px-14 border-t" style="border-color:rgba(255,255,255,0.07);">
+<footer class="bg-dark pt-12 pb-8 px-5 sm:px-8 lg:px-14 border-t" style="border-color:var(--hairline);">
   <div class="max-w-7xl mx-auto">
 
     <!-- Top row: brand + social icons -->
