@@ -695,7 +695,7 @@
       width: max-content;
       animation: marquee 36s linear infinite;
     }
-    .marquee-track:hover { animation-play-state: paused; }
+    /* Marquee runs continuously, including on hover */
 
     /* ─── Glow helpers ──────────────────────────────────────── */
     .accent-glow    { text-shadow: 0 0 40px rgba(212,175,55,0.28); }
@@ -791,7 +791,8 @@
     .case-card:hover {
       border-color: rgba(255,255,255,0.12);
       background-color: #131313;
-      transform: translateY(-6px) translateZ(0);
+      /* !important so the lift wins over .visible { transform: none !important } */
+      transform: translateY(-6px) translateZ(0) !important;
     }
     .case-card .card-accent-line {
       height: 1px;
@@ -1076,7 +1077,7 @@
         </a>
 
         <!-- Free Resources CTA (solid gold) -->
-        <a href="#" class="btn-expand bg-accent text-dark px-6 py-2.5 font-mono text-[11px] uppercase tracking-widest whitespace-nowrap font-light" style="border-radius:6px; letter-spacing:0.1em;">
+        <a href="#" class="btn-expand bg-accent text-dark px-6 py-2.5 font-mono text-[11px] uppercase tracking-widest whitespace-nowrap font-medium" style="border-radius:6px; letter-spacing:0.1em;">
           <span class="btn-label">Free Resources</span>
           <span class="btn-panel" style="background:rgba(0,0,0,0.14);">
             <i class="fa-solid fa-arrow-right -rotate-45 text-[10px] text-dark"></i>
@@ -1195,14 +1196,14 @@
 
     <!-- Tech pills -->
     <div class="reveal flex flex-wrap justify-center gap-3 mt-14" style="transition-delay: 240ms;">
-      <span class="tech-pill">Make.com</span>
-      <span class="tech-pill">Claude API</span>
-      <span class="tech-pill">Notion</span>
-      <span class="tech-pill">Apify</span>
-      <span class="tech-pill">N8N</span>
-      <span class="tech-pill">Python</span>
-      <span class="tech-pill">OpenAI</span>
-      <span class="tech-pill">Airtable</span>
+      <span class="tech-pill">Business</span>
+      <span class="tech-pill">Automation</span>
+      <span class="tech-pill">AI Agents</span>
+      <span class="tech-pill">Systems</span>
+      <span class="tech-pill">Efficiency</span>
+      <span class="tech-pill">Growth</span>
+      <span class="tech-pill">Scale</span>
+      <span class="tech-pill">Results</span>
     </div>
   </div>
 </section>
@@ -1322,7 +1323,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
       <!-- Project 1: The SI Local -->
-      <article class="case-card group reveal reveal-scale" style="transition-delay: 0ms;">
+      <article class="case-card group reveal" style="transition-delay: 0ms;">
         <div class="aspect-[16/7] overflow-hidden relative flex items-center justify-center" style="background: #0d0d0d;">
           <div class="absolute inset-0" style="background: rgba(0,0,0,0.18);"></div>
           <i class="fa-solid fa-cube text-7xl text-secondary opacity-15 group-hover:opacity-35 group-hover:scale-105 transition-all duration-500" style="transition-timing-function: cubic-bezier(0.22,1,0.36,1);"></i>
@@ -1353,7 +1354,7 @@
       </article>
 
       <!-- Project 2: Lead Scraping System -->
-      <article class="case-card group reveal reveal-scale" style="transition-delay: 100ms;">
+      <article class="case-card group reveal" style="transition-delay: 100ms;">
         <div class="aspect-[16/7] overflow-hidden relative flex items-center justify-center" style="background: #0d0d0d;">
           <div class="absolute inset-0" style="background: rgba(0,0,0,0.18);"></div>
           <i class="fa-solid fa-magnifying-glass-chart text-7xl text-secondary opacity-15 group-hover:opacity-35 group-hover:scale-105 transition-all duration-500" style="transition-timing-function: cubic-bezier(0.22,1,0.36,1);"></i>
@@ -1384,7 +1385,7 @@
       </article>
 
       <!-- Project 3: Client Automation Projects -->
-      <article class="case-card group reveal reveal-scale" style="transition-delay: 200ms;">
+      <article class="case-card group reveal" style="transition-delay: 200ms;">
         <div class="aspect-[16/7] overflow-hidden relative flex items-center justify-center" style="background: #0d0d0d;">
           <div class="absolute inset-0" style="background: rgba(0,0,0,0.18);"></div>
           <i class="fa-solid fa-database text-7xl text-secondary opacity-15 group-hover:opacity-35 group-hover:scale-105 transition-all duration-500" style="transition-timing-function: cubic-bezier(0.22,1,0.36,1);"></i>
@@ -1415,7 +1416,7 @@
       </article>
 
       <!-- Project 4: Los Mina Unidos -->
-      <article class="case-card group reveal reveal-scale" style="transition-delay: 300ms;">
+      <article class="case-card group reveal" style="transition-delay: 300ms;">
         <div class="aspect-[16/7] overflow-hidden relative flex items-center justify-center" style="background: #0d0d0d;">
           <div class="absolute inset-0" style="background: rgba(0,0,0,0.18);"></div>
           <i class="fa-solid fa-pen-nib text-7xl text-secondary opacity-15 group-hover:opacity-35 group-hover:scale-105 transition-all duration-500" style="transition-timing-function: cubic-bezier(0.22,1,0.36,1);"></i>
@@ -1528,11 +1529,6 @@
            class="w-9 h-9 border flex items-center justify-center text-secondary hover:text-white hover:border-white/30 transition-all duration-200"
            style="border-color:rgba(255,255,255,0.1);" aria-label="Twitter/X">
           <i class="fa-brands fa-x-twitter text-sm"></i>
-        </a>
-        <a href="https://github.com/OmarflorexAI" target="_blank"
-           class="w-9 h-9 border flex items-center justify-center text-secondary hover:text-white hover:border-white/30 transition-all duration-200"
-           style="border-color:rgba(255,255,255,0.1);" aria-label="GitHub">
-          <i class="fa-brands fa-github text-sm"></i>
         </a>
       </div>
     </div>
