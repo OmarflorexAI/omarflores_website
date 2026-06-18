@@ -16,3 +16,6 @@ package-lock.json
 /*.md
 /screenshot.js
 /shot-sections.js
+
+# Downloaded extension binaries
+*.vsix
