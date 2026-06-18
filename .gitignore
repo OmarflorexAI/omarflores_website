@@ -19,3 +19,10 @@ package-lock.json
 
 # Downloaded extension binaries
 *.vsix
+
+# Build verification tooling (local only)
+/capture.js
+/diff.js
+/before/
+/after/
+/diffout/
