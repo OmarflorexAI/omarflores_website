@@ -1457,20 +1457,24 @@
   <!-- BGPattern: dots + fade-edges -->
   <div class="bg-pattern bg-pattern-dots bg-mask-fade-edges" style="opacity: 0.5;"></div>
 
-  <div class="max-w-7xl mx-auto relative z-10">
+  <div class="max-w-5xl mx-auto relative z-10">
 
-    <div class="community-layout flex flex-col lg:flex-row gap-16 items-center">
+    <div class="community-layout flex flex-col lg:flex-row gap-10 lg:gap-14 items-center">
 
-      <!-- Left: Headline -->
-      <div class="lg:w-1/2">
-        <h2 class="reveal font-serif text-white" style="font-size: clamp(40px, 5vw, 64px); line-height: 1.02;">
+      <!-- Left: Headline + manual fallback -->
+      <div class="lg:w-1/2 w-full space-y-6 text-center lg:text-left">
+        <h2 class="reveal font-serif text-white" style="font-size: clamp(44px, 6.5vw, 76px); line-height: 0.98;">
           Let's Get<br>In Touch.
         </h2>
+        <p class="reveal font-mono text-[11px] sm:text-xs text-secondary tracking-wide leading-relaxed" style="transition-delay: 120ms;">
+          Or just reach out manually to<br class="hidden sm:block">
+          <a href="mailto:Omar@romanalabs.com" class="text-white transition-colors hover:text-accent" style="border-bottom:1px solid rgba(212,175,55,0.4); padding-bottom:1px;">Omar@romanalabs.com</a>
+        </p>
       </div>
 
-      <!-- Right: Get In Touch card (centered, opens contact modal) -->
-      <div class="lg:w-1/2 relative reveal-right" style="transition-delay: 200ms;">
-        <div class="relative border p-8 md:p-12 overflow-hidden text-center" style="border-color:rgba(255,255,255,0.12); background:#0b0b0b; border-top:2px solid #D4AF37;">
+      <!-- Right: Get In Touch card (opens contact modal) -->
+      <div class="lg:w-1/2 w-full relative reveal-right" style="transition-delay: 200ms;">
+        <div class="relative border p-8 md:p-10 overflow-hidden text-center" style="border-color:rgba(255,255,255,0.12); background:#0b0b0b; border-top:2px solid #D4AF37;">
           <h3 class="font-serif text-2xl text-white mb-3">Let's Build Something.</h3>
           <p class="text-secondary text-sm leading-relaxed mb-8 max-w-sm mx-auto">
             Have a project, a question, or an idea worth automating? Send me a message and I'll get back to you.
@@ -1483,10 +1487,6 @@
             </span>
           </button>
         </div>
-        <p class="reveal font-mono text-[11px] text-secondary mt-5 text-center" style="transition-delay: 260ms;">
-          Or just reach out manually to
-          <a href="mailto:Omar@romanalabs.com" class="text-white transition-colors hover:text-accent" style="border-bottom:1px solid rgba(212,175,55,0.4); padding-bottom:1px;">Omar@romanalabs.com</a>
-        </p>
       </div>
 
     </div>
