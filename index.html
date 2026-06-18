@@ -3,8 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Omar Flores — AI Automation Expert</title>
-  <meta name="description" content="Omar Flores builds AI automation systems, lead generation machines, and intelligent workflows that drive real results.">
+
+  <!-- Primary SEO -->
+  <title>Omar Flores — AI Automation Expert &amp; Systems Builder</title>
+  <meta name="description" content="Omar Flores builds AI automation systems, lead generation machines, and intelligent workflows that drive real results for businesses. Done for you, built to last.">
+  <meta name="author" content="Omar Flores">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="keywords" content="Omar Flores, AI automation, AI agents, business automation, workflow automation, lead generation, Make.com, n8n, AI consultant">
+  <link rel="canonical" href="https://omarflores-website.pages.dev/">
+  <meta name="theme-color" content="#050505">
+
+  <!-- Google Search Console: replace the content value with YOUR token (Search Console > Add property > HTML tag) -->
+  <meta name="google-site-verification" content="REPLACE_WITH_YOUR_SEARCH_CONSOLE_CODE">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Open Graph (Facebook, LinkedIn, iMessage) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Omar Flores">
+  <meta property="og:title" content="Omar Flores — AI Automation Expert">
+  <meta property="og:description" content="I build the AI backbone that drives real results. AI automation, lead-gen machines, and intelligent workflows. Done for you, built to last.">
+  <meta property="og:url" content="https://omarflores-website.pages.dev/">
+  <meta property="og:image" content="https://omarflores-website.pages.dev/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Omar Flores — AI Automation Expert">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Omar Flores — AI Automation Expert">
+  <meta name="twitter:description" content="I build the AI backbone that drives real results. AI automation, lead-gen machines, and intelligent workflows.">
+  <meta name="twitter:image" content="https://omarflores-website.pages.dev/og.png">
+  <meta name="twitter:creator" content="@omarflowers_">
+
+  <!-- Structured data: tells Google who Omar is and links his profiles -->
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Omar Flores",
+      "url": "https://omarflores-website.pages.dev/",
+      "image": "https://omarflores-website.pages.dev/brand_assets/5RsAsDt5_400x400.jpg",
+      "jobTitle": "AI Automation Expert",
+      "description": "Omar Flores builds AI automation systems, lead generation machines, and intelligent workflows that drive real results for businesses.",
+      "knowsAbout": ["AI automation", "AI agents", "business process automation", "lead generation", "workflow automation"],
+      "sameAs": [
+        "https://www.youtube.com/@OmarFloresx",
+        "https://instagram.com/omarfloresx",
+        "https://linkedin.com/in/omarrflores",
+        "https://twitter.com/omarflowers_",
+        "https://omarfloresai.gumroad.com/"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Omar Flores",
+      "url": "https://omarflores-website.pages.dev/"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Omar Flores — AI Automation",
+      "url": "https://omarflores-website.pages.dev/",
+      "description": "AI automation systems, lead generation machines, and intelligent workflows built for businesses.",
+      "areaServed": "Worldwide",
+      "founder": { "@type": "Person", "name": "Omar Flores" }
+    }
+  ]
+  </script>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -685,6 +756,18 @@
       transform: none !important;
     }
 
+    /* Respect users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+      .marquee-track { animation: none !important; }
+      .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1 !important; transform: none !important; }
+    }
+
     /* ─── Marquee ───────────────────────────────────────────── */
     @keyframes marquee {
       from { transform: translateX(0); }
@@ -1017,13 +1100,13 @@
           <input id="contact-company" name="company" type="text" tabindex="-1" autocomplete="off">
         </label>
       </div>
-      <input id="contact-name" type="text" placeholder="Full name" required
+      <input id="contact-name" type="text" placeholder="Full name" required aria-label="Full name" autocomplete="name"
              class="w-full bg-surface-h border px-4 py-3 font-mono text-sm text-white focus:border-accent transition-colors"
              style="border-color:rgba(255,255,255,0.12);">
-      <input id="contact-email" type="email" placeholder="your@email.com" required
+      <input id="contact-email" type="email" placeholder="your@email.com" required aria-label="Email address" autocomplete="email"
              class="w-full bg-surface-h border px-4 py-3 font-mono text-sm text-white focus:border-accent transition-colors"
              style="border-color:rgba(255,255,255,0.12);">
-      <textarea id="contact-message" rows="4" placeholder="Your message" required
+      <textarea id="contact-message" rows="4" placeholder="Your message" required aria-label="Your message"
                 class="w-full bg-surface-h border px-4 py-3 font-mono text-sm text-white focus:border-accent transition-colors resize-none"
                 style="border-color:rgba(255,255,255,0.12);"></textarea>
       <button type="submit" class="btn-expand bg-accent text-dark w-full px-6 py-3 font-mono text-sm uppercase tracking-widest font-medium justify-center">
@@ -1175,7 +1258,7 @@
 
     <!-- Portrait: square frame, rounded edges -->
     <div class="reveal flex justify-center mb-10" style="transition-delay: 120ms;">
-      <img src="brand_assets/5RsAsDt5_400x400.jpg" alt="Omar Flores"
+      <img src="brand_assets/5RsAsDt5_400x400.jpg" alt="Portrait of Omar Flores" width="400" height="400" loading="lazy" decoding="async"
            class="w-40 h-40 sm:w-44 sm:h-44 object-cover rounded-2xl"
            style="border:1px solid rgba(212,175,55,0.35); box-shadow:0 10px 40px rgba(0,0,0,0.5);">
     </div>
