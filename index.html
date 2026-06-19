@@ -1186,37 +1186,10 @@
      STATS TICKER (MARQUEE)
 ══════════════════════════════════════════════ -->
 <div class="border-y overflow-hidden py-5 relative" style="border-color:var(--hairline); background:#0f0f0f;">
-  <div class="marquee-track select-none">
-    <!-- Set 1 -->
-    <div class="flex items-center shrink-0" style="gap: 0;">
-      <div class="ticker-item flex items-center gap-4 px-10">
-        <span class="font-serif text-[2.25rem] italic leading-none" style="color:var(--accent);">3+</span>
-        <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Years<br>Experience</span>
-      </div>
-      <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
-      <div class="ticker-item flex items-center gap-4 px-10">
-        <span class="font-serif text-[2.25rem] italic leading-none" style="color:var(--accent);">50+</span>
-        <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Systems<br>Deployed</span>
-      </div>
-      <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
-      <div class="ticker-item flex items-center gap-4 px-10">
-        <span class="font-serif text-[2.25rem] italic leading-none" style="color:var(--accent);">500+</span>
-        <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Workflows<br>For Clients</span>
-      </div>
-      <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
-      <div class="ticker-item flex items-center gap-4 px-10">
-        <span class="font-serif text-[2.25rem] italic leading-none" style="color:var(--accent);">20+</span>
-        <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Clients<br>Served</span>
-      </div>
-      <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
-      <div class="ticker-item flex items-center gap-4 px-10">
-        <span class="font-serif text-[2.25rem] italic leading-none" style="color:var(--accent);">$200k+</span>
-        <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Generated for<br>One Client</span>
-      </div>
-      <div class="w-px self-stretch" style="background:rgba(255,255,255,0.09);"></div>
-    </div>
-    <!-- Set 2 (duplicate for seamless loop) -->
-    <div class="flex items-center shrink-0" style="gap: 0;">
+  <div class="marquee-track select-none" id="marquee-track">
+    <!-- Template group: JS clones this until the track is >= 2x the viewport,
+         so the translateX(-50%) loop is always seamless (no empty gap). -->
+    <div class="marquee-group flex items-center shrink-0" style="gap: 0;">
       <div class="ticker-item flex items-center gap-4 px-10">
         <span class="font-serif text-[2.25rem] italic leading-none" style="color:var(--accent);">3+</span>
         <span class="font-mono text-[9px] uppercase tracking-widest text-secondary leading-[1.5]">Years<br>Experience</span>
@@ -1760,6 +1733,34 @@
       }
     });
   }
+
+  // ─── Marquee: clone the stat group until the track is >= 2x the
+  // viewport so the translateX(-50%) loop is always seamless (no gap). ──
+  (function initMarquee() {
+    const track = document.getElementById('marquee-track');
+    if (!track) return;
+    const unitHTML = track.querySelector('.marquee-group')?.outerHTML;
+    if (!unitHTML) return;
+    const SPEED = 55; // px per second — keeps scroll speed constant at any width
+
+    function build() {
+      track.style.animation = 'none';
+      track.innerHTML = unitHTML; // one group to measure
+      const viewport = (track.parentElement?.clientWidth) || window.innerWidth;
+      const unitW = track.firstElementChild.getBoundingClientRect().width;
+      if (!unitW) return;
+      // groups needed to cover one viewport, min 1; that block is then doubled
+      const groups = Math.max(1, Math.ceil(viewport / unitW) + 1);
+      track.innerHTML = unitHTML.repeat(groups * 2);
+      const halfW = groups * unitW;
+      track.style.animation = '';
+      track.style.animationDuration = (halfW / SPEED).toFixed(2) + 's';
+    }
+
+    build();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+    let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(build, 200); });
+  })();
 
   // ─── Hero smoke background (WebGL2) ──────────────
   // Vanilla port of spooky-smoke-animation.tsx. Same fragment shader,
