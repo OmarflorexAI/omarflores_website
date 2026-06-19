@@ -775,6 +775,23 @@
     }
     .tech-pill:hover { border-color: var(--accent); color: var(--accent); }
 
+    /* ─── Navbar scroll transition (smooth, no class-swap pop) ─── */
+    #navbar {
+      background-color: rgba(5,5,5,0);
+      border-bottom: 1px solid transparent;
+      -webkit-backdrop-filter: blur(0px);
+      backdrop-filter: blur(0px);
+      transition: background-color 0.4s ease, border-color 0.4s ease,
+                  -webkit-backdrop-filter 0.4s ease, backdrop-filter 0.4s ease;
+      will-change: background-color, backdrop-filter;
+    }
+    #navbar.nav-scrolled {
+      background-color: rgba(5,5,5,0.85);
+      border-bottom-color: rgba(255,255,255,0.07);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+    }
+
     /* ─── Nav link underline ────────────────────────────────── */
     a.nav-link {
       font-family: 'JetBrains Mono', monospace;
@@ -949,19 +966,19 @@
     /* Desktop: side gradient — dark on the text side (left), smoke breathes on the right */
     #hero-overlay {
       background: linear-gradient(to right,
-        rgba(5,5,5,0.82) 0%,
-        rgba(5,5,5,0.50) 45%,
-        rgba(5,5,5,0.18) 100%);
+        rgba(5,5,5,0.85) 0%,
+        rgba(5,5,5,0.55) 45%,
+        rgba(5,5,5,0.24) 100%);
     }
     /* Mobile: content spans full width, so use a softer vertical wash that
        lets the smoke show through while keeping text legible */
     @media (max-width: 1023px) {
       #hero-overlay {
         background: linear-gradient(to bottom,
-          rgba(5,5,5,0.50) 0%,
-          rgba(5,5,5,0.28) 40%,
-          rgba(5,5,5,0.42) 72%,
-          rgba(5,5,5,0.66) 100%);
+          rgba(5,5,5,0.42) 0%,
+          rgba(5,5,5,0.16) 42%,
+          rgba(5,5,5,0.30) 72%,
+          rgba(5,5,5,0.52) 100%);
       }
     }
 
@@ -998,9 +1015,7 @@
 <!-- ═══════════════════════════════════════════
      NAVBAR
 ══════════════════════════════════════════════ -->
-<header class="fixed top-0 w-full z-50 transition-all duration-300"
-        :class="scrolled ? 'bg-dark/90 backdrop-blur-lg border-b border-dim' : 'bg-transparent'"
-        style="border-color: rgba(255,255,255,0.06);">
+<header id="navbar" class="fixed top-0 w-full z-50" :class="{ 'nav-scrolled': scrolled }">
   <div class="max-w-screen-2xl mx-auto px-5 sm:px-8 lg:px-14">
     <div class="flex items-center justify-between h-20">
 
