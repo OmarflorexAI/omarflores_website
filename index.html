@@ -145,27 +145,27 @@
     /* Variant: grid (H + V lines, like romanalabs.com) */
     .bg-pattern-grid {
       background-image:
-        linear-gradient(to right,  rgba(255,255,255,0.022) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,0.022) 1px, transparent 1px);
+        linear-gradient(to right,  rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
       background-size: 44px 44px;
     }
 
     /* Variant: vertical-lines only */
     .bg-pattern-vlines {
-      background-image: linear-gradient(to right, rgba(255,255,255,0.043) 1px, transparent 1px);
+      background-image: linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px);
       background-size: 44px 44px;
     }
 
     /* Variant: dots */
     .bg-pattern-dots {
-      background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(255,255,255,0.18) 1px, transparent 1px);
       background-size: 24px 24px;
     }
 
-    /* Mask: fade-edges — center visible, tight radial fade to edges */
+    /* Mask: fade-edges — center visible, gentle radial fade to edges */
     .bg-mask-fade-edges {
-      -webkit-mask-image: radial-gradient(ellipse 65% 65% at 50% 50%, black 20%, transparent 75%);
-      mask-image:         radial-gradient(ellipse 65% 65% at 50% 50%, black 20%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, black 35%, transparent 85%);
+      mask-image:         radial-gradient(ellipse 75% 75% at 50% 50%, black 35%, transparent 85%);
     }
 
     /* Mask: fade-y — top & bottom fade out */
@@ -192,7 +192,7 @@
       0%   { transform: translate(0,    0); }
       100% { transform: translate(44px, 44px); }
     }
-    .bg-pattern-animate { animation: gridDrift 5s linear infinite; }
+    .bg-pattern-animate { animation: gridDrift 20s linear infinite; will-change: transform; }
 
     /* Dots background slow drift */
     @keyframes dotsDrift {
@@ -945,6 +945,26 @@
     }
     .flow-btn:hover .flow-arr-right { right: -28px; stroke: #ffffff; }
 
+    /* ─── Hero overlay (keeps copy readable over the smoke) ──── */
+    /* Desktop: side gradient — dark on the text side (left), smoke breathes on the right */
+    #hero-overlay {
+      background: linear-gradient(to right,
+        rgba(5,5,5,0.88) 0%,
+        rgba(5,5,5,0.62) 45%,
+        rgba(5,5,5,0.32) 100%);
+    }
+    /* Mobile: content spans full width, so use a softer vertical wash that
+       lets the smoke show through while keeping text legible */
+    @media (max-width: 1023px) {
+      #hero-overlay {
+        background: linear-gradient(to bottom,
+          rgba(5,5,5,0.62) 0%,
+          rgba(5,5,5,0.40) 38%,
+          rgba(5,5,5,0.55) 72%,
+          rgba(5,5,5,0.80) 100%);
+      }
+    }
+
     /* ─── Responsive polish ─────────────────────────────────── */
     /* Tighter service/project card padding on small screens */
     @media (max-width: 480px) {
@@ -1033,12 +1053,6 @@
     <a href="#about"    @click="open=false" class="font-serif text-3xl text-white border-b border-white/7 pb-5 hover:text-accent transition-colors" style="border-color:var(--hairline);">About</a>
     <a href="#community" @click="open=false; contactOpen=true" class="font-serif text-3xl text-accent">Contact</a>
   </nav>
-  <div class="mt-auto pb-12">
-    <div class="flex items-center gap-2">
-      <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
-      <span class="font-mono text-xs text-secondary uppercase tracking-widest">System Online</span>
-    </div>
-  </div>
 </div>
 
 
@@ -1105,12 +1119,12 @@
 <!-- ═══════════════════════════════════════════
      HERO
 ══════════════════════════════════════════════ -->
-<section id="hero" class="grid-bg min-h-screen pt-28 pb-16 px-5 sm:px-8 lg:px-14 flex flex-col justify-center overflow-hidden">
+<section id="hero" class="grid-bg pt-32 pb-20 lg:pt-28 lg:pb-16 lg:min-h-[100svh] px-5 sm:px-8 lg:px-14 flex flex-col justify-center overflow-hidden">
 
   <!-- Smoke background: WebGL2 shader (ported from spooky-smoke-animation.tsx) -->
   <canvas id="smoke-canvas" class="absolute inset-0 w-full h-full block" aria-hidden="true"></canvas>
   <!-- Dark overlay keeps hero copy readable over the smoke -->
-  <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to right, rgba(5,5,5,0.92) 0%, rgba(5,5,5,0.7) 45%, rgba(5,5,5,0.45) 100%);"></div>
+  <div id="hero-overlay" class="absolute inset-0 pointer-events-none"></div>
 
   <div class="max-w-7xl w-full mx-auto relative z-10">
     <div id="hero-content" class="max-w-4xl space-y-6">
@@ -1776,8 +1790,9 @@ void main(){
   col.g-=fbm(uv*1.003+vec2(0,T*.015)+n+.003);
   col.b-=fbm(uv*1.006+vec2(0,T*.015)+n+.006);
   col=mix(col, u_color, dot(col,vec3(.21,.71,.07)));
-  col=mix(vec3(.08),col,min(time*.1,1.));
-  col=clamp(col,.08,1.);
+  col*=1.18;                       // lift the smoke so it reads on dark bg
+  col=mix(vec3(.07),col,min(time*.1,1.));
+  col=clamp(col,.07,1.);
   // Dither to break up color banding (the "glitchy" contour rings),
   // strongest in the dark gold regions. ~1.5/255 of screen-space noise.
   col+=(rnd(FC+fract(T))-.5)/170.;
