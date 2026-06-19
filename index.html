@@ -145,8 +145,8 @@
     /* Variant: grid (H + V lines, like romanalabs.com) */
     .bg-pattern-grid {
       background-image:
-        linear-gradient(to right,  rgba(255,255,255,0.05) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+        linear-gradient(to right,  rgba(255,255,255,0.11) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.11) 1px, transparent 1px);
       background-size: 44px 44px;
     }
 
@@ -164,8 +164,8 @@
 
     /* Mask: fade-edges — center visible, gentle radial fade to edges */
     .bg-mask-fade-edges {
-      -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, black 35%, transparent 85%);
-      mask-image:         radial-gradient(ellipse 75% 75% at 50% 50%, black 35%, transparent 85%);
+      -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 50%, transparent 92%);
+      mask-image:         radial-gradient(ellipse 85% 85% at 50% 50%, black 50%, transparent 92%);
     }
 
     /* Mask: fade-y — top & bottom fade out */
@@ -949,19 +949,19 @@
     /* Desktop: side gradient — dark on the text side (left), smoke breathes on the right */
     #hero-overlay {
       background: linear-gradient(to right,
-        rgba(5,5,5,0.88) 0%,
-        rgba(5,5,5,0.62) 45%,
-        rgba(5,5,5,0.32) 100%);
+        rgba(5,5,5,0.82) 0%,
+        rgba(5,5,5,0.50) 45%,
+        rgba(5,5,5,0.18) 100%);
     }
     /* Mobile: content spans full width, so use a softer vertical wash that
        lets the smoke show through while keeping text legible */
     @media (max-width: 1023px) {
       #hero-overlay {
         background: linear-gradient(to bottom,
-          rgba(5,5,5,0.62) 0%,
-          rgba(5,5,5,0.40) 38%,
-          rgba(5,5,5,0.55) 72%,
-          rgba(5,5,5,0.80) 100%);
+          rgba(5,5,5,0.50) 0%,
+          rgba(5,5,5,0.28) 40%,
+          rgba(5,5,5,0.42) 72%,
+          rgba(5,5,5,0.66) 100%);
       }
     }
 
@@ -1119,7 +1119,7 @@
 <!-- ═══════════════════════════════════════════
      HERO
 ══════════════════════════════════════════════ -->
-<section id="hero" class="grid-bg pt-32 pb-20 lg:pt-28 lg:pb-16 lg:min-h-[100svh] px-5 sm:px-8 lg:px-14 flex flex-col justify-center overflow-hidden">
+<section id="hero" class="grid-bg pt-24 pb-12 lg:pt-28 lg:pb-16 lg:min-h-[100svh] px-5 sm:px-8 lg:px-14 flex flex-col justify-center overflow-hidden">
 
   <!-- Smoke background: WebGL2 shader (ported from spooky-smoke-animation.tsx) -->
   <canvas id="smoke-canvas" class="absolute inset-0 w-full h-full block" aria-hidden="true"></canvas>
@@ -1841,6 +1841,11 @@ void main(){
     }
     resize();
     window.addEventListener('resize', resize);
+    // Re-size the backing store whenever the hero itself changes size (font load,
+    // content reflow, mobile address-bar show/hide) so the smoke always fills it.
+    if (window.ResizeObserver) { new ResizeObserver(resize).observe(canvas); }
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(resize); }
+    window.addEventListener('load', resize);
 
     function render(now) {
       gl.clearColor(0, 0, 0, 1);
