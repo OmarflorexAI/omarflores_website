@@ -90,6 +90,9 @@
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.12/dist/cdn.min.js"
           integrity="sha384-pb6hrQvo4s23cEUFtj0CZkzGE3jyK3pj26RIupXXxhSrrcUA/Cn0lZgcCrGH0t6L" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+  <!-- Cloudflare Turnstile (contact-form bot protection) -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 
   <style>
     /* ─── Brand color spectrum (rainbow border) ─────────────── */
@@ -1119,6 +1122,8 @@
       <textarea id="contact-message" rows="4" placeholder="Your message" required aria-label="Your message"
                 class="w-full bg-surface-h border px-4 py-3 font-mono text-sm text-white focus:border-accent transition-colors resize-none"
                 style="border-color:rgba(255,255,255,0.12);"></textarea>
+      <!-- Turnstile: replace data-sitekey with your widget's PUBLIC site key -->
+      <div id="contact-turnstile" class="cf-turnstile" data-sitekey="REPLACE_WITH_TURNSTILE_SITE_KEY" data-theme="dark" data-size="flexible"></div>
       <button type="submit" class="btn-expand bg-accent text-dark w-full px-6 py-3 font-mono text-sm uppercase tracking-widest font-medium justify-center">
         <span class="btn-label">Send Message</span>
         <span class="btn-panel" style="background:rgba(0,0,0,0.14);">
@@ -1700,14 +1705,18 @@
       const message = document.getElementById('contact-message').value.trim();
       if (!name || !email || !message) return;
 
-      // Honeypot: a real user never sees or fills this. If it's filled, it's a
-      // bot. Silently show success and do nothing (don't tip off the bot).
+      // Honeypot (kept as a cheap extra layer; also re-checked server-side).
       const trap = document.getElementById('contact-company');
-      if (trap && trap.value) {
-        contactMsg.textContent = "Got it. I'll get back to you soon.";
-        contactMsg.style.color = '#D4AF37';
+      const company = trap ? trap.value : '';
+
+      // Turnstile token — the server rejects the submission without a valid one.
+      const token = (window.turnstile && typeof window.turnstile.getResponse === 'function')
+        ? (window.turnstile.getResponse() || '')
+        : '';
+      if (!company && !token) {
+        contactMsg.textContent = 'Please complete the challenge below and try again.';
+        contactMsg.style.color = '#ef4444';
         contactMsg.classList.remove('hidden');
-        contactForm.reset();
         return;
       }
 
@@ -1715,21 +1724,31 @@
       btn.disabled = true;
 
       try {
-        await fetch('https://hook.us2.make.com/o2dkg4r2t7hs7qnenxbkv8iyrept62ar', {
+        const res = await fetch('/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, message, source: 'omar-flores-website', timestamp: new Date().toISOString() }),
+          body: JSON.stringify({ name, email, message, company, turnstileToken: token }),
         });
-        contactMsg.textContent = "Got it. I'll get back to you soon.";
-        contactMsg.style.color = '#D4AF37';
-        contactMsg.classList.remove('hidden');
-        contactForm.reset();
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok) {
+          contactMsg.textContent = "Got it. I'll get back to you soon.";
+          contactMsg.style.color = '#D4AF37';
+          contactMsg.classList.remove('hidden');
+          contactForm.reset();
+        } else {
+          contactMsg.textContent = data.error || 'Something went wrong. Try again in a moment.';
+          contactMsg.style.color = '#ef4444';
+          contactMsg.classList.remove('hidden');
+        }
       } catch {
         contactMsg.textContent = 'Something went wrong. Try again in a moment.';
         contactMsg.style.color = '#ef4444';
         contactMsg.classList.remove('hidden');
       } finally {
         btn.disabled = false;
+        if (window.turnstile && typeof window.turnstile.reset === 'function') {
+          window.turnstile.reset();
+        }
       }
     });
   }
